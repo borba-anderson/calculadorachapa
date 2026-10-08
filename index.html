@@ -1,1115 +1,1022 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#205f2b">
-<title>Madville | Gestão de Chapas</title>
-
-<style>
-:root {
-  --green:#205f2b;
-  --dark:#16471f;
-  --light:#eaf4ec;
-  --bg:#f5f7f5;
-  --white:#fff;
-  --text:#203028;
-  --muted:#718078;
-  --border:#dfe7e1;
-  --red:#b93636;
-  --shadow:0 4px 24px rgba(15,49,24,.055);
-}
-
-* {box-sizing:border-box}
-body {
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,select {font:inherit}
-button {cursor:pointer}
-button:disabled {opacity:.5;cursor:not-allowed}
-button:focus-visible,input:focus-visible,select:focus-visible {
-  outline:3px solid #85c993;
-  outline-offset:2px;
-}
-
-.topbar {
-  background:var(--green);
-  color:white;
-}
-.top-inner {
-  max-width:1260px;
-  margin:auto;
-  padding:21px 24px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-}
-.brand {
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-.brand-mark {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  line-height:1;
-  flex-shrink:0;
-}
-.brand-mark strong {
-  font-size:26px;
-  font-weight:900;
-  letter-spacing:-1.3px;
-  color:#fff;
-}
-.brand-mark small {
-  font-size:13px;
-  font-weight:900;
-  font-style:italic;
-  color:#fff;
-  margin-top:5px;
-}
-.brand-mark small span {color:#82bd78}
-.brand-divider {
-  height:43px;
-  width:1px;
-  background:#ffffff40;
-}
-.brand-description {
-  font-size:13px;
-  color:#e1efe4;
-  line-height:1.7;
-}
-.brand-description b {
-  font-size:15px;
-  color:white;
-}
-.version {
-  font-size:12px;
-  padding:9px 13px;
-  border-radius:50px;
-  border:1px solid #ffffff42;
-  color:white;
-  white-space:nowrap;
-}
-.container {
-  max-width:1260px;
-  padding:32px 24px 70px;
-  margin:auto;
-}
-.page-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:18px;
-  margin-bottom:25px;
-}
-.eyebrow {
-  font-size:11px;
-  color:var(--green);
-  letter-spacing:1.6px;
-  text-transform:uppercase;
-  font-weight:800;
-}
-h1 {
-  font-size:30px;
-  margin:7px 0;
-  letter-spacing:-1px;
-}
-h2 {
-  font-size:18px;
-  letter-spacing:-.4px;
-  margin:0;
-}
-.subtitle {
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-}
-.card {
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  padding:24px;
-  margin-bottom:20px;
-}
-.card-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:22px;
-  flex-wrap:wrap;
-}
-.card-head p {
-  margin:7px 0 0;
-  color:var(--muted);
-  font-size:12px;
-}
-.section-number {
-  color:var(--green);
-  background:var(--light);
-  padding:7px 10px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:800;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:16px;
-}
-.span2 {grid-column:span 2}
-.field label {
-  display:block;
-  font-size:12px;
-  color:#526357;
-  font-weight:700;
-  margin-bottom:8px;
-}
-.field input,.field select {
-  width:100%;
-  min-height:45px;
-  padding:11px 13px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  background:#fff;
-  color:var(--text);
-  font-size:14px;
-}
-.field input:focus,.field select:focus {
-  outline:none;
-  border-color:var(--green);
-  box-shadow:0 0 0 3px #205f2b15;
-}
-.actions {
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.btn {
-  border:1px solid transparent;
-  border-radius:9px;
-  padding:12px 17px;
-  font-size:13px;
-  font-weight:750;
-}
-.btn-primary {
-  background:var(--green);
-  color:white;
-}
-.btn-primary:hover {background:var(--dark)}
-.btn-soft {
-  background:var(--light);
-  color:var(--green);
-}
-.btn-outline {
-  background:white;
-  color:var(--green);
-  border-color:var(--border);
-}
-.btn-danger {
-  background:#fff1f1;
-  color:var(--red);
-}
-.btn-mini {
-  font-size:12px;
-  padding:8px 10px;
-}
-.metrics {
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:15px;
-  margin:20px 0;
-}
-.metric {
-  background:#fff;
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:13px;
-  min-width:0;
-}
-.metric.highlight {
-  color:white;
-  background:var(--green);
-  border-color:var(--green);
-}
-.metric .label {
-  font-size:12px;
-  color:var(--muted);
-}
-.metric.highlight .label {color:#dfefe1}
-.metric .value {
-  font-size:26px;
-  font-weight:800;
-  letter-spacing:-.7px;
-  margin-top:13px;
-  overflow-wrap:anywhere;
-}
-.metric .foot {
-  font-size:11px;
-  color:var(--muted);
-  margin-top:7px;
-}
-.metric.highlight .foot {color:#d5ead9}
-.preview {
-  background:#f5faf6;
-  border:1px solid #e0ede2;
-  border-radius:12px;
-  padding:18px;
-  margin-top:20px;
-}
-.preview h3 {
-  margin:0 0 14px;
-  color:var(--green);
-  font-size:13px;
-}
-.preview-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
-}
-.preview .label {
-  color:var(--muted);
-  font-size:11px;
-}
-.preview strong {
-  display:block;
-  font-size:20px;
-  margin-top:7px;
-  overflow-wrap:anywhere;
-}
-.table-wrap {overflow-x:auto}
-table {
-  width:100%;
-  border-collapse:collapse;
-  min-width:950px;
-}
-thead {background:#f4f8f5}
-th {
-  text-align:left;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  color:#69796e;
-}
-th,td {
-  padding:15px 12px;
-  border-bottom:1px solid var(--border);
-}
-td {
-  font-size:12px;
-  vertical-align:middle;
-}
-td.numeric {
-  font-variant-numeric:tabular-nums;
-  white-space:nowrap;
-  font-weight:700;
-}
-.empty {
-  text-align:center;
-  color:var(--muted);
-  padding:35px;
-}
-.badge {
-  display:inline-block;
-  color:var(--green);
-  background:var(--light);
-  border-radius:6px;
-  padding:6px 9px;
-  font-size:11px;
-  font-weight:750;
-  white-space:nowrap;
-}
-.table-actions {
-  display:flex;
-  gap:6px;
-}
-.parameter-list {
-  display:flex;
-  flex-wrap:wrap;
-  gap:11px;
-}
-.parameter {
-  background:#f5faf6;
-  border:1px solid var(--border);
-  padding:12px 15px;
-  border-radius:9px;
-  font-size:12px;
-}
-.note {
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-.notice {
-  padding:13px;
-  margin-top:16px;
-  border:1px solid #e8dbc4;
-  background:#fffbf1;
-  border-radius:9px;
-  font-size:12px;
-  color:#755e36;
-  line-height:1.5;
-}
-.footer {
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding-top:16px;
-}
-
-@media(max-width:1000px) {
-  .grid,.metrics {grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:650px) {
-  .container {padding:20px 12px 40px}
-  .top-inner {padding:18px 14px}
-  .brand-mark strong {font-size:21px}
-  .brand-description {font-size:11px}
-  .brand-description b {font-size:12px}
-  .version {display:none}
-  .card {padding:18px}
-  .grid,.metrics,.preview-grid {
-    grid-template-columns:1fr;
-  }
-  .span2 {grid-column:span 1}
-  .page-head {display:block}
-  h1 {font-size:26px}
-}
-@media print {
-  body {background:white}
-  .topbar {
-    background:white!important;
-    color:black!important;
-    border-bottom:2px solid #205f2b;
-  }
-  .brand-mark strong,.brand-mark small,
-  .brand-description,.brand-description b {
-    color:#205f2b!important;
-  }
-  .version,.no-print,.preview {display:none!important}
-  .container {max-width:none;padding:12px}
-  .card,.metric {
-    box-shadow:none;
-    break-inside:avoid;
-  }
-  .metrics {grid-template-columns:repeat(4,1fr)}
-  .metric.highlight {
-    background:white!important;
-    color:black!important;
-    border:1px solid #205f2b;
-  }
-  .metric.highlight .label,
-  .metric.highlight .foot {color:#555!important}
-  .table-wrap {overflow:visible}
-  table {min-width:0;font-size:9px}
-  th,td {padding:6px;font-size:9px}
-  .table-actions {display:none}
-  .footer {font-size:10px}
-  @page {size:A4 landscape;margin:10mm}
-}
-</style>
-</head>
-
-<body>
-
-<header class="topbar">
-  <div class="top-inner">
-    <div class="brand">
-      <div class="brand-mark" aria-label="Madville GMAD">
-        <strong>MADVILLE</strong>
-        <small>GM<span>A</span>D</small>
-      </div>
-      <div class="brand-divider"></div>
-      <div class="brand-description">
-        <b>Central de Compras</b><br>
-        Gestão e Conversão de Chapas
-      </div>
-    </div>
-    <div class="version">Sistema Interno · V2.0</div>
-  </div>
-</header>
-
-<main class="container">
-
-  <section class="page-head">
-    <div>
-      <div class="eyebrow">Ferramentas operacionais</div>
-      <h1>Calculadora de Chapas</h1>
-      <div class="subtitle">
-        Conversão de unidades, precificação e controle de pedidos.
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head">
-      <h2>Informações do pedido</h2>
-      <span class="section-number">01</span>
-    </div>
-
-    <div class="grid">
-      <div class="field span2">
-        <label for="fornecedor">Fornecedor</label>
-        <input id="fornecedor" placeholder="Nome do fornecedor">
-      </div>
-      <div class="field">
-        <label for="pedido">Número do pedido</label>
-        <input id="pedido" placeholder="Ex.: OC-10258">
-      </div>
-      <div class="field">
-        <label for="data">Data</label>
-        <input type="date" id="data">
-      </div>
-    </div>
-  </section>
-
-  <section class="card no-print">
-    <div class="card-head">
-      <div>
-        <h2>Adicionar produto</h2>
-        <p>Insira as informações para converter automaticamente.</p>
-      </div>
-      <span class="section-number">02</span>
-    </div>
-
-    <form id="form">
-      <div class="grid">
-
-        <div class="field span2">
-          <label for="produto">Descrição / código</label>
-          <input id="produto"
-            placeholder="Ex.: MDF Branco TX 18 mm"
-            required maxlength="160">
-        </div>
-
-        <div class="field">
-          <label for="volume">Quantidade (m³)</label>
-          <input id="volume" inputmode="decimal"
-            placeholder="Ex.: 1,5" required>
-        </div>
-
-        <div class="field">
-          <label for="espessura">Espessura</label>
-          <select id="espessura">
-            <option value="0.006">06 mm</option>
-            <option value="0.015">15 mm</option>
-            <option value="0.018" selected>18 mm</option>
-            <option value="0.025">25 mm</option>
-          </select>
-        </div>
-
-        <div class="field span2">
-          <label for="preco">Preço de compra (R$/m³)</label>
-          <input id="preco" inputmode="decimal"
-            placeholder="Ex.: 1500,00" required>
-        </div>
-
-      </div>
-
-      <div class="preview" aria-live="polite">
-        <h3>Prévia da conversão</h3>
-        <div class="preview-grid">
-          <div>
-            <span class="label">Chapas equivalentes</span>
-            <strong id="prevChapas">—</strong>
-          </div>
-          <div>
-            <span class="label">Preço por chapa</span>
-            <strong id="prevPreco">—</strong>
-          </div>
-          <div>
-            <span class="label">Valor total teórico</span>
-            <strong id="prevTotal">—</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions" style="margin-top:20px">
-        <button type="submit" class="btn btn-primary"
-          id="btnSalvar">
-          + Adicionar ao pedido
-        </button>
-        <button type="button" class="btn btn-soft"
-          id="btnCancelar" hidden>
-          Cancelar edição
-        </button>
-        <button type="reset" class="btn btn-outline">
-          Limpar campos
-        </button>
-      </div>
-    </form>
-  </section>
-
-  <section class="metrics">
-    <div class="metric">
-      <div class="label">Produtos no pedido</div>
-      <div class="value" id="totalItens">0</div>
-      <div class="foot">Linhas cadastradas</div>
-    </div>
-
-    <div class="metric">
-      <div class="label">Volume total</div>
-      <div class="value" id="totalVolume">0</div>
-      <div class="foot">Metros cúbicos (m³)</div>
-    </div>
-
-    <div class="metric">
-      <div class="label">Chapas equivalentes</div>
-      <div class="value" id="totalChapas">0</div>
-      <div class="foot">Quantidade teórica</div>
-    </div>
-
-    <div class="metric highlight">
-      <div class="label">Valor total convertido</div>
-      <div class="value" id="valorTotal">R$ 0,00</div>
-      <div class="foot">Com acréscimo de 3,25%</div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head">
-      <div>
-        <h2>Itens do pedido</h2>
-        <p>Conferência dos produtos e valores convertidos.</p>
-      </div>
-      <div class="actions no-print">
-        <button type="button" class="btn btn-soft"
-          id="btnCSV">
-          Exportar Excel
-        </button>
-        <button type="button" class="btn btn-outline"
-          onclick="window.print()">
-          Imprimir / PDF
-        </button>
-        <button type="button" class="btn btn-danger"
-          id="btnLimpar">
-          Limpar pedido
-        </button>
-      </div>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Esp.</th>
-            <th>Volume m³</th>
-            <th>Chapas</th>
-            <th>Inteiras</th>
-            <th>R$/chapa</th>
-            <th>Total</th>
-            <th class="no-print">Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabela"></tbody>
-      </table>
-    </div>
-
-    <div class="notice">
-      A quantidade de chapas inteiras é arredondada
-      para cima apenas como referência operacional.
-      Os valores financeiros são calculados utilizando
-      a quantidade teórica sem arredondamento.
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head">
-      <h2>Parâmetros de conversão</h2>
-    </div>
-
-    <div class="parameter-list">
-      <span class="parameter">
-        Área padrão: <b>5,0875 m²</b>
-      </span>
-      <span class="parameter">
-        Acréscimo: <b>3,25%</b>
-      </span>
-      <span class="parameter">
-        Área ajustada: <b>5,25284375 m²</b>
-      </span>
-      <span class="parameter">
-        Espessuras: <b>06 / 15 / 18 / 25 mm</b>
-      </span>
-    </div>
-
-    <p class="note">
-      Quantidade = Volume ÷ (5,0875 × Espessura em metros).
-    </p>
-    <p class="note">
-      Preço/chapa = Preço/m³ × Espessura ×
-      5,0875 × 1,0325.
-    </p>
-    <p class="note">
-      O acréscimo de 3,25% é aplicado ao preço,
-      não à quantidade.
-    </p>
-  </section>
-
-  <div class="footer">
-    MADVILLE | GMAD — Departamento de Compras<br>
-    Ferramenta de apoio à conferência e conversão.
-  </div>
-
-</main>
-
-<script>
-"use strict";
-
-const AREA = 5.0875;
-const ACRESCIMO = 1.0325;
-const STORAGE_KEY = "madville_chapas_v2";
-
-const $ = id => document.getElementById(id);
-
-const espessurasPermitidas = [
-  0.006, 0.015, 0.018, 0.025
-];
-
-let itens = [];
-let indiceEdicao = null;
-
-// Formatação brasileira
-const br = (n, casas = 4) =>
-  new Intl.NumberFormat("pt-BR", {
-    minimumFractionDigits: casas,
-    maximumFractionDigits: casas
-  }).format(n);
-
-const moeda = n =>
-  new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(n);
-
-// Aceita 1500,50 e 1500.50.
-// Também aceita 1.500,50 e 1,500.50.
-function parseDecimal(valor) {
-  let s = String(valor).trim()
-    .replace(/\s/g, "")
-    .replace(/^R\$/, "");
-
-  if (!s) return NaN;
-
-  const virgula = s.lastIndexOf(",");
-  const ponto = s.lastIndexOf(".");
-
-  if (virgula !== -1 && ponto !== -1) {
-    if (virgula > ponto) {
-      s = s.replace(/\./g, "").replace(",", ".");
-    } else {
-      s = s.replace(/,/g, "");
-    }
-  } else if (virgula !== -1) {
-    s = s.replace(",", ".");
-  }
-
-  if (!/^\d+(\.\d+)?$/.test(s)) return NaN;
-
-  return Number(s);
-}
-
-// Regra de negócio centralizada
-function calcular(volume, espessura, precoM3) {
-  const chapas = volume / (AREA * espessura);
-
-  const precoChapa =
-    precoM3 * espessura * AREA * ACRESCIMO;
-
-  const total = chapas * precoChapa;
-
-  return {
-    chapas,
-    inteiras: Math.ceil(chapas - 1e-9),
-    precoChapa,
-    total
-  };
-}
-
-function validarItem(item) {
-  return (
-    typeof item.produto === "string" &&
-    item.produto.trim().length > 0 &&
-    item.produto.length <= 160 &&
-    Number.isFinite(item.volume) &&
-    item.volume > 0 &&
-    Number.isFinite(item.preco) &&
-    item.preco >= 0 &&
-    espessurasPermitidas.includes(item.espessura)
-  );
-}
-
-function salvarDados() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      itens,
-      fornecedor: $("fornecedor").value,
-      pedido: $("pedido").value,
-      data: $("data").value
-    }));
-  } catch (erro) {
-    console.error("Erro ao salvar:", erro);
-  }
-}
-
-function carregarDados() {
-  try {
-    const dados = JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || "{}"
-    );
-
-    itens = Array.isArray(dados.itens)
-      ? dados.itens.filter(validarItem)
-      : [];
-
-    $("fornecedor").value = dados.fornecedor || "";
-    $("pedido").value = dados.pedido || "";
-    $("data").value = dados.data || "";
-  } catch {
-    itens = [];
-  }
-
-  if (!$("data").value) {
-    const agora = new Date();
-    const local = new Date(
-      agora.getTime() -
-      agora.getTimezoneOffset() * 60000
-    );
-    $("data").value = local.toISOString().slice(0, 10);
-  }
-}
-
-function lerFormulario() {
-  return {
-    produto: $("produto").value.trim(),
-    volume: parseDecimal($("volume").value),
-    espessura: Number($("espessura").value),
-    preco: parseDecimal($("preco").value)
-  };
-}
-
-function atualizarPreview() {
-  const item = lerFormulario();
-
-  $("prevChapas").textContent = "—";
-  $("prevPreco").textContent = "—";
-  $("prevTotal").textContent = "—";
-
-  if (
-    !Number.isFinite(item.volume) ||
-    item.volume <= 0 ||
-    !Number.isFinite(item.preco) ||
-    item.preco < 0
-  ) return;
-
-  const r = calcular(
-    item.volume,
-    item.espessura,
-    item.preco
-  );
-
-  $("prevChapas").textContent = br(r.chapas);
-  $("prevPreco").textContent = moeda(r.precoChapa);
-  $("prevTotal").textContent = moeda(r.total);
-}
-
-function encerrarEdicao() {
-  indiceEdicao = null;
-  $("btnSalvar").textContent = "+ Adicionar ao pedido";
-  $("btnCancelar").hidden = true;
-}
-
-function limparFormulario() {
-  $("form").reset();
-  encerrarEdicao();
-  atualizarPreview();
-}
-
-function adicionarOuEditar(evento) {
-  evento.preventDefault();
-
-  const item = lerFormulario();
-
-  if (!validarItem(item)) {
-    alert(
-      "Confira a descrição, a espessura, " +
-      "o volume positivo e o preço informado."
-    );
-    return;
-  }
-
-  const r = calcular(
-    item.volume,
-    item.espessura,
-    item.preco
-  );
-
-  if (!Object.values(r).every(Number.isFinite)) {
-    alert("O cálculo excedeu os limites numéricos.");
-    return;
-  }
-
-  if (indiceEdicao !== null) {
-    itens[indiceEdicao] = item;
-  } else {
-    itens.push(item);
-  }
-
-  salvarDados();
-  renderizar();
-  limparFormulario();
-}
-
-function editarItem(indice) {
-  const item = itens[indice];
-  if (!item) return;
-
-  indiceEdicao = indice;
-
-  $("produto").value = item.produto;
-  $("volume").value = String(item.volume).replace(".", ",");
-  $("espessura").value = String(item.espessura);
-  $("preco").value = String(item.preco).replace(".", ",");
-
-  $("btnSalvar").textContent = "Salvar alterações";
-  $("btnCancelar").hidden = false;
-
-  atualizarPreview();
-
-  $("form").scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-}
-
-function excluirItem(indice) {
-  if (!confirm("Excluir este item do pedido?")) return;
-
-  itens.splice(indice, 1);
-  encerrarEdicao();
-  salvarDados();
-  renderizar();
-}
-
-function adicionarCelula(linha, texto, classe = "") {
-  const td = linha.insertCell();
-  td.textContent = texto;
-  if (classe) td.className = classe;
-  return td;
-}
-
-// Renderização sem inserir dados de usuário como HTML
-function renderizar() {
-  const tbody = $("tabela");
-  tbody.replaceChildren();
-
-  let volumeTotal = 0;
-  let chapasTotal = 0;
-  let totalGeral = 0;
-
-  if (itens.length === 0) {
-    const tr = tbody.insertRow();
-    const td = tr.insertCell();
-    td.colSpan = 8;
-    td.className = "empty";
-    td.textContent = "Nenhum produto adicionado.";
-  }
-
-  itens.forEach((item, indice) => {
-    const r = calcular(
-      item.volume,
-      item.espessura,
-      item.preco
-    );
-
-    volumeTotal += item.volume;
-    chapasTotal += r.chapas;
-    totalGeral += r.total;
-
-    const tr = tbody.insertRow();
-
-    adicionarCelula(tr, item.produto);
-
-    const esp = adicionarCelula(
-      tr,
-      br(item.espessura * 1000, 0) + " mm"
-    );
-    esp.className = "numeric";
-
-    adicionarCelula(
-      tr, br(item.volume), "numeric"
-    );
-
-    adicionarCelula(
-      tr, br(r.chapas), "numeric"
-    );
-
-    adicionarCelula(
-      tr, br(r.inteiras, 0), "numeric"
-    );
-
-    adicionarCelula(
-      tr, moeda(r.precoChapa), "numeric"
-    );
-
-    adicionarCelula(
-      tr, moeda(r.total), "numeric"
-    );
-
-    const td = tr.insertCell();
-    td.className = "no-print";
-
-    const div = document.createElement("div");
-    div.className = "table-actions";
-
-    const editar = document.createElement("button");
-    editar.className = "btn btn-soft btn-mini";
-    editar.textContent = "Editar";
-    editar.onclick = () => editarItem(indice);
-
-    const excluir = document.createElement("button");
-    excluir.className = "btn btn-danger btn-mini";
-    excluir.textContent = "Excluir";
-    excluir.onclick = () => excluirItem(indice);
-
-    div.append(editar, excluir);
-    td.appendChild(div);
-  });
-
-  $("totalItens").textContent = br(itens.length, 0);
-  $("totalVolume").textContent = br(volumeTotal);
-  $("totalChapas").textContent = br(chapasTotal);
-  $("valorTotal").textContent = moeda(totalGeral);
-}
-
-function limparPedido() {
-  if (!itens.length) return;
-
-  if (!confirm("Deseja apagar todos os itens?")) return;
-
-  itens = [];
-  encerrarEdicao();
-  salvarDados();
-  renderizar();
-  limparFormulario();
-}
-
-function csvSeguro(valor) {
-  let texto = String(valor);
-
-  // Impede execução de fórmulas ao abrir no Excel
-  if (/^[\s]*[=+\-@\t\r]/.test(texto)) {
-    texto = "'" + texto;
-  }
-
-  return '"' + texto.replace(/"/g, '""') + '"';
-}
-
-function exportarCSV() {
-  if (!itens.length) {
-    alert("Adicione produtos antes de exportar.");
-    return;
-  }
-
-  const linhas = [[
-    "Fornecedor", "Pedido", "Data",
-    "Produto", "Espessura (mm)",
-    "Volume (m3)", "Chapas equivalentes",
-    "Chapas inteiras", "Preco por chapa (R$)",
-    "Total convertido (R$)"
-  ]];
-
-  itens.forEach(item => {
-    const r = calcular(
-      item.volume,
-      item.espessura,
-      item.preco
-    );
-
-    linhas.push([
-      $("fornecedor").value,
-      $("pedido").value,
-      $("data").value,
-      item.produto,
-      item.espessura * 1000,
-      item.volume,
-      r.chapas,
-      r.inteiras,
-      r.precoChapa,
-      r.total
-    ]);
-  });
-
-  const csv = "\uFEFF" + linhas
-    .map(linha => linha.map(csvSeguro).join(";"))
-    .join("\r\n");
-
-  const blob = new Blob([csv], {
-    type: "text/csv;charset=utf-8;"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download = "madville_pedido_chapas.csv";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-// Inicialização
-document.addEventListener("DOMContentLoaded", () => {
-  carregarDados();
-  renderizar();
-  atualizarPreview();
-
-  $("form").addEventListener(
-    "submit", adicionarOuEditar
-  );
-
-  $("form").addEventListener("reset", () => {
-    setTimeout(encerrarEdicao, 0);
-    setTimeout(atualizarPreview, 0);
-  });
-
-  $("btnCancelar").addEventListener(
-    "click", limparFormulario
-  );
-
-  ["produto", "volume", "espessura", "preco"]
-    .forEach(id => {
-      $(id).addEventListener(
-        "input", atualizarPreview
-      );
-    });
-
-  ["fornecedor", "pedido", "data"].forEach(id => {
-    $(id).addEventListener("input", salvarDados);
-    $(id).addEventListener("change", salvarDados);
-  });
-
-  $("btnCSV").addEventListener(
-    "click", exportarCSV
-  );
-
-  $("btnLimpar").addEventListener(
-    "click", limparPedido
-  );
-});
-</script>
-
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+        <title>Madville — Sheet Converter</title>
+        <style>
+            :root {
+                font-family: Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+                color: #17221b;
+                background: #f9faf9;
+                font-synthesis: none
+            }
+
+            * {
+                box-sizing: border-box
+            }
+
+            body {
+                margin: 0
+            }
+
+            button,input,select {
+                font: inherit
+            }
+
+            button {
+                cursor: pointer
+            }
+
+            button:focus-visible,input:focus-visible,select:focus-visible {
+                outline: 3px solid #a9cdb2;
+                outline-offset: 2px
+            }
+
+            .topbar {
+                height: 70px;
+                background: #fff;
+                border-bottom: 1px solid #e9eeea
+            }
+
+            .top-inner {
+                max-width: 1160px;
+                margin: auto;
+                height: 100%;
+                padding: 0 28px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 15px
+            }
+
+            .mark {
+                width: 34px;
+                height: 34px;
+                border-radius: 9px;
+                background: #21652d;
+                color: white;
+                display: grid;
+                place-items: center;
+                font-weight: 780;
+                letter-spacing: -.06em;
+                font-size: 17px
+            }
+
+            .brand-name {
+                font-weight: 780;
+                letter-spacing: -.035em;
+                font-size: 17px
+            }
+
+            .brand-division {
+                margin-left: 15px;
+                padding-left: 17px;
+                border-left: 1px solid #dce4de;
+                color: #89958b;
+                font-size: 12px
+            }
+
+            .top-status {
+                font-size: 12px;
+                color: #758379;
+                display: flex;
+                align-items: center;
+                gap: 8px
+            }
+
+            .status-dot {
+                height: 7px;
+                width: 7px;
+                background: #4ca56b;
+                border-radius: 50%
+            }
+
+            .shell {
+                max-width: 1160px;
+                margin: auto;
+                padding: 50px 28px 90px
+            }
+
+            .breadcrumbs {
+                font-size: 12px;
+                color: #909d93;
+                margin-bottom: 18px
+            }
+
+            .intro {
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                gap: 20px;
+                margin-bottom: 31px
+            }
+
+            .intro h1 {
+                font-size: 32px;
+                font-weight: 680;
+                line-height: 1.18;
+                letter-spacing: -.055em;
+                margin: 0 0 11px
+            }
+
+            .intro p {
+                margin: 0;
+                font-size: 14px;
+                color: #87928a;
+                line-height: 1.5
+            }
+
+            .note-pill {
+                font-size: 11px;
+                font-weight: 650;
+                color: #286538;
+                background: #eff6f0;
+                border: 1px solid #dcebdd;
+                border-radius: 20px;
+                padding: 9px 12px;
+                white-space: nowrap
+            }
+
+            .workspace {
+                display: grid;
+                grid-template-columns: minmax(0,1fr) 292px;
+                gap: 22px
+            }
+
+            .panel {
+                background: #fff;
+                border: 1px solid #e4ebe5;
+                border-radius: 13px
+            }
+
+            .panel-pad {
+                padding: 28px
+            }
+
+            .panel-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 25px
+            }
+
+            .section-title {
+                font-size: 14px;
+                font-weight: 730;
+                letter-spacing: -.018em
+            }
+
+            .section-hint {
+                font-size: 12px;
+                color: #9aa69d
+            }
+
+            .fields {
+                display: grid;
+                grid-template-columns: repeat(2,minmax(0,1fr));
+                gap: 20px
+            }
+
+            .wide {
+                grid-column: 1/-1
+            }
+
+            label {
+                display: block;
+                color: #617066;
+                font-size: 12px;
+                font-weight: 630;
+                margin-bottom: 9px
+            }
+
+            .field input,.field select {
+                width: 100%;
+                height: 44px;
+                border: 1px solid #dfe7e1;
+                border-radius: 8px;
+                background: #fff;
+                padding: 0 13px;
+                color: #23342a;
+                font-size: 13px;
+                transition: border .15s
+            }
+
+            .field input::placeholder {
+                color: #a9b3ac
+            }
+
+            .field input:focus,.field select:focus {
+                border-color: #609d6d;
+                outline: none;
+                box-shadow: 0 0 0 3px #edf6ee
+            }
+
+            .compact-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px
+            }
+
+            .divider {
+                height: 1px;
+                background: #eef1ee;
+                margin: 26px 0
+            }
+
+            .preview-label {
+                color: #91a096;
+                font-size: 11px;
+                font-weight: 620;
+                letter-spacing: .03em;
+                text-transform: uppercase;
+                margin-bottom: 17px
+            }
+
+            .preview {
+                display: grid;
+                grid-template-columns: repeat(3,minmax(0,1fr));
+                gap: 14px
+            }
+
+            .preview .heading {
+                font-size: 12px;
+                color: #798a7e;
+                margin-bottom: 8px
+            }
+
+            .preview .number {
+                font-size: 22px;
+                font-weight: 650;
+                letter-spacing: -.045em;
+                white-space: nowrap
+            }
+
+            .preview .currency {
+                color: #246a34
+            }
+
+            .buttons {
+                display: flex;
+                gap: 10px;
+                margin-top: 28px;
+                flex-wrap: wrap
+            }
+
+            button {
+                border: 1px solid transparent;
+                border-radius: 8px;
+                padding: 11px 15px;
+                font-weight: 660;
+                font-size: 12px;
+                transition: background .15s
+            }
+
+            .primary {
+                background: #246b34;
+                color: #fff
+            }
+
+            .primary:hover {
+                background: #195426
+            }
+
+            .quiet {
+                background: #f4f7f4;
+                color: #45594a;
+                border-color: #eef1ee
+            }
+
+            .quiet:hover {
+                background: #e9f0ea
+            }
+
+            .bare {
+                background: #fff;
+                border-color: #e4eae5;
+                color: #53675a
+            }
+
+            .bare:hover {
+                background: #f6faf7
+            }
+
+            .danger {
+                background: #fff;
+                color: #a84444;
+                border-color: #f2e0e0
+            }
+
+            .side .panel {
+                margin-bottom: 18px
+            }
+
+            .side dl {
+                margin: 0
+            }
+
+            .side .spec {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 13px 0;
+                border-bottom: 1px solid #eff2ef;
+                gap: 10px
+            }
+
+            .side .spec:last-child {
+                border-bottom: 0
+            }
+
+            .side dt {
+                font-size: 12px;
+                color: #819085
+            }
+
+            .side dd {
+                margin: 0;
+                font-size: 13px;
+                font-weight: 650;
+                font-variant-numeric: tabular-nums
+            }
+
+            .side .tiny {
+                font-size: 11px;
+                line-height: 1.65;
+                color: #94a198;
+                margin: 18px 0 0
+            }
+
+            .side-heading {
+                font-size: 11px;
+                color: #9fac9f;
+                text-transform: uppercase;
+                letter-spacing: .075em;
+                margin: 0 0 14px
+            }
+
+            .summary-num {
+                font-size: 30px;
+                font-weight: 680;
+                letter-spacing: -.05em;
+                margin: 0 0 4px
+            }
+
+            .summary-caption {
+                font-size: 12px;
+                color: #91a095;
+                margin-bottom: 23px
+            }
+
+            .summary-line {
+                display: flex;
+                justify-content: space-between;
+                gap: 14px;
+                padding: 12px 0;
+                border-top: 1px solid #eef2ee;
+                font-size: 12px;
+                color: #728377
+            }
+
+            .summary-line strong {
+                color: #293a2e;
+                font-size: 13px;
+                font-weight: 670
+            }
+
+            .order-panel {
+                margin-top: 22px
+            }
+
+            .order-head {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+                padding: 22px 26px;
+                border-bottom: 1px solid #edf1ed
+            }
+
+            .order-actions {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap
+            }
+
+            .table-wrap {
+                overflow-x: auto
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                min-width: 835px;
+                text-align: left
+            }
+
+            th {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: .04em;
+                font-weight: 680;
+                color: #94a297;
+                background: #fbfcfb
+            }
+
+            th,td {
+                padding: 16px 17px;
+                border-bottom: 1px solid #f0f2f0
+            }
+
+            td {
+                font-size: 12px;
+                color: #57665b
+            }
+
+            td:first-child {
+                font-weight: 650;
+                color: #29382d
+            }
+
+            td.num {
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap
+            }
+
+            tr:last-child td {
+                border-bottom: 0
+            }
+
+            .table-btn {
+                background: none;
+                color: #537a5e;
+                padding: 3px 5px;
+                font-size: 11px
+            }
+
+            .table-btn:hover {
+                text-decoration: underline
+            }
+
+            .table-btn.remove {
+                color: #ab6565
+            }
+
+            .empty {
+                text-align: center!important;
+                color: #9aa89d!important;
+                font-weight: 400!important;
+                padding: 42px!important
+            }
+
+            .order-foot {
+                padding: 14px 26px;
+                border-top: 1px solid #eef2ee;
+                font-size: 11px;
+                color: #a0aca3
+            }
+
+            .footer {
+                text-align: center;
+                font-size: 11px;
+                color: #a4aea5;
+                margin-top: 38px
+            }
+
+            #message {
+                font-size: 12px;
+                color: #b35050;
+                margin-top: 12px;
+                min-height: 0
+            }
+
+            #message:empty {
+                display: none
+            }
+
+            .footer a {
+                color: inherit
+            }
+
+            @media(max-width: 880px) {
+                .workspace {
+                    grid-template-columns:1fr
+                }
+
+                .side {
+                    display: grid;
+                    grid-template-columns: repeat(2,minmax(0,1fr));
+                    gap: 18px
+                }
+
+                .side .panel {
+                    margin: 0
+                }
+            }
+
+            @media(max-width: 600px) {
+                .shell {
+                    padding:32px 15px 60px
+                }
+
+                .top-inner {
+                    padding: 0 15px
+                }
+
+                .brand-division,.top-status,.note-pill {
+                    display: none
+                }
+
+                .intro h1 {
+                    font-size: 28px
+                }
+
+                .panel-pad {
+                    padding: 20px
+                }
+
+                .fields {
+                    grid-template-columns: 1fr
+                }
+
+                .wide {
+                    grid-column: auto
+                }
+
+                .preview {
+                    gap: 8px
+                }
+
+                .preview .number {
+                    font-size: 17px
+                }
+
+                .preview .heading {
+                    font-size: 11px
+                }
+
+                .side {
+                    grid-template-columns: 1fr
+                }
+
+                .order-head {
+                    padding: 20px
+                }
+
+                .order-actions {
+                    width: 100%
+                }
+
+                .order-actions button {
+                    flex: 1
+                }
+
+                .order-foot {
+                    padding: 14px 20px
+                }
+            }
+
+            @media print {
+                body {
+                    background: white
+                }
+
+                .topbar {
+                    border: 0
+                }
+
+                .shell {
+                    padding: 18px
+                }
+
+                .workspace {
+                    display: none
+                }
+
+                .breadcrumbs,.note-pill,.order-actions,.table-btn,.footer,.top-status {
+                    display: none!important
+                }
+
+                .order-panel {
+                    margin-top: 15px
+                }
+
+                .order-head {
+                    border-bottom: 1px solid #ddd
+                }
+
+                .table-wrap {
+                    overflow: visible
+                }
+
+                table {
+                    min-width: 0
+                }
+
+                th,td {
+                    padding: 8px;
+                    font-size: 9px
+                }
+
+                th:last-child,td:last-child {
+                    display: none
+                }
+
+                .panel {
+                    border-color: #ddd
+                }
+
+                @page {
+                    size: A4 landscape;
+                    margin: 12mm
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="top-inner">
+                <div class="brand">
+                    <div class="mark">M</div>
+                    <span class="brand-name">Madville</span>
+                    <span class="brand-division">Procurement tools</span>
+                </div>
+                <div class="top-status">
+                    <span class="status-dot"></span>
+                    Dados salvos neste dispositivo
+                </div>
+            </div>
+        </header>
+        <main class="shell">
+            <div class="breadcrumbs">Compras / Ferramentas / Conversão de chapas</div>
+            <div class="intro">
+                <div>
+                    <h1>Conversão de chapas</h1>
+                    <p>Volumes, espessuras e preços — sem cálculos manuais.</p>
+                </div>
+                <div class="note-pill">Área nominal 5,0875 m²</div>
+            </div>
+            <div class="workspace">
+                <section class="panel panel-pad">
+                    <div class="panel-top">
+                        <span class="section-title">Novo item</span>
+                        <span class="section-hint">Conversão em tempo real</span>
+                    </div>
+                    <form id="form" autocomplete="off">
+                        <div class="fields">
+                            <div class="field wide">
+                                <label for="produto">Descrição do produto</label>
+                                <input id="produto" placeholder="Ex.: MDF Branco TX 18 mm" maxlength="150" required>
+                            </div>
+                            <div class="field">
+                                <label for="volume">Quantidade (m³)</label>
+                                <input id="volume" type="text" inputmode="decimal" placeholder="0,0000" required>
+                            </div>
+                            <div class="field">
+                                <label for="espessura">Espessura</label>
+                                <select id="espessura">
+                                    <option value="0.006">06 mm</option>
+                                    <option value="0.015">15 mm</option>
+                                    <option value="0.018" selected>18 mm</option>
+                                    <option value="0.025">25 mm</option>
+                                </select>
+                            </div>
+                            <div class="field wide">
+                                <label for="preco">Preço por m³ (R$)</label>
+                                <input id="preco" type="text" inputmode="decimal" placeholder="0,00" required>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="preview-label">Prévia do cálculo</div>
+                        <div class="preview" aria-live="polite">
+                            <div>
+                                <div class="heading">Chapas equivalentes</div>
+                                <div class="number" id="prevQ">—</div>
+                            </div>
+                            <div>
+                                <div class="heading">Preço / chapa</div>
+                                <div class="number" id="prevP">—</div>
+                            </div>
+                            <div>
+                                <div class="heading">Total estimado</div>
+                                <div class="number currency" id="prevT">—</div>
+                            </div>
+                        </div>
+                        <div id="message" role="alert"></div>
+                        <div class="buttons">
+                            <button type="submit" class="primary" id="submitBtn">Adicionar ao pedido →</button>
+                            <button type="button" class="quiet" id="resetBtn">Limpar campos</button>
+                            <button type="button" class="bare" id="cancelBtn" hidden>Cancelar edição</button>
+                        </div>
+                    </form>
+                </section>
+                <aside class="side">
+                    <section class="panel panel-pad">
+                        <h2 class="side-heading">Resumo do pedido</h2>
+                        <p class="summary-num" id="grand">R$ 0,00</p>
+                        <div class="summary-caption">Valor teórico convertido</div>
+                        <div class="summary-line">
+                            <span>Itens</span>
+                            <strong id="itemCount">0</strong>
+                        </div>
+                        <div class="summary-line">
+                            <span>Volume total</span>
+                            <strong id="sumVol">0,0000 m³</strong>
+                        </div>
+                        <div class="summary-line">
+                            <span>Chapas equivalentes</span>
+                            <strong id="sumQty">0,0000</strong>
+                        </div>
+                    </section>
+                    <section class="panel panel-pad">
+                        <h2 class="side-heading">Parâmetros de cálculo</h2>
+                        <dl>
+                            <div class="spec">
+                                <dt>Área nominal</dt>
+                                <dd>5,0875 m²</dd>
+                            </div>
+                            <div class="spec">
+                                <dt>Acréscimo no preço</dt>
+                                <dd>3,25%</dd>
+                            </div>
+                            <div class="spec">
+                                <dt>Área ajustada (preço)</dt>
+                                <dd>5,25284375 m²</dd>
+                            </div>
+                        </dl>
+                        <p class="tiny">Quantidade = m³ ÷ (5,0875 × espessura em metros). Preço por chapa = preço/m³ × 5,0875 × espessura × 1,0325.</p>
+                    </section>
+                </aside>
+            </div>
+            <section class="panel order-panel">
+                <div class="order-head">
+                    <div class="section-title">
+                        Itens do pedido <span id="countLabel" style="color:#a1ada4;font-weight:500;margin-left:5px">(0)</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="bare" id="exportBtn" type="button">Exportar CSV ↗</button>
+                        <button class="bare" type="button" onclick="window.print()">Imprimir / PDF</button>
+                        <button class="danger" id="clearBtn" type="button">Limpar pedido</button>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Esp.</th>
+                                <th>Volume m³</th>
+                                <th>Chapas equiv.</th>
+                                <th>Inteiras</th>
+                                <th>R$/chapa</th>
+                                <th>Valor total</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rows"></tbody>
+                    </table>
+                </div>
+                <div class="order-foot">Quantidade inteira arredondada para cima como referência. Valores calculados sobre a quantidade fracionária, sem arredondar a base do cálculo.</div>
+            </section>
+            <div class="footer">Madville · Ferramenta interna de apoio a compras · Os dados ficam armazenados apenas neste navegador.</div>
+        </main>
+        <script>
+            'use strict';
+            const AREA = 5.0875
+              , FATOR = 1.0325
+              , KEY = 'madville_sheet_converter_minimal_v1';
+            const $ = id => document.getElementById(id);
+            const fmt = (v, d=4) => new Intl.NumberFormat('pt-BR',{
+                minimumFractionDigits: d,
+                maximumFractionDigits: d
+            }).format(v);
+            const money = v => new Intl.NumberFormat('pt-BR',{
+                style: 'currency',
+                currency: 'BRL'
+            }).format(v);
+            const allowed = [.006, .015, .018, .025];
+            let items = []
+              , editing = null;
+            try {
+                const stored = JSON.parse(localStorage.getItem(KEY) || '[]');
+                if (Array.isArray(stored))
+                    items = stored.filter(x => typeof x.name === 'string' && x.name.trim() && Number.isFinite(x.vol) && x.vol > 0 && Number.isFinite(x.price) && x.price >= 0 && allowed.includes(x.t));
+            } catch (e) {
+                console.warn('Storage unavailable', e)
+            }
+            function decimal(raw) {
+                let s = String(raw).trim().replace(/\s/g, '');
+                if (!s)
+                    return NaN;
+                if (s.includes(',') && s.includes('.')) {
+                    s = s.lastIndexOf(',') > s.lastIndexOf('.') ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '')
+                } else if (s.includes(',')) {
+                    s = s.replace(',', '.')
+                }
+                return /^\d+(\.\d+)?$/.test(s) ? Number(s) : NaN
+            }
+            function calc(vol, t, price) {
+                let qty = vol / (AREA * t)
+                  , unit = price * AREA * t * FATOR;
+                return {
+                    qty,
+                    unit,
+                    total: qty * unit,
+                    whole: Math.ceil(qty - 1e-10)
+                }
+            }
+            function current() {
+                let name = $('produto').value.trim()
+                  , vol = decimal($('volume').value)
+                  , t = Number($('espessura').value)
+                  , price = decimal($('preco').value);
+                return {
+                    name,
+                    vol,
+                    t,
+                    price,
+                    valid: vol > 0 && price >= 0 && Number.isFinite(vol) && Number.isFinite(price) && allowed.includes(t)
+                }
+            }
+            function preview() {
+                let x = current();
+                $('prevQ').textContent = '—';
+                $('prevP').textContent = '—';
+                $('prevT').textContent = '—';
+                $('message').textContent = '';
+                if (!x.valid)
+                    return;
+                let r = calc(x.vol, x.t, x.price);
+                if (!Object.values(r).every(Number.isFinite))
+                    return;
+                $('prevQ').textContent = fmt(r.qty);
+                $('prevP').textContent = money(r.unit);
+                $('prevT').textContent = money(r.total)
+            }
+            function persist() {
+                try {
+                    localStorage.setItem(KEY, JSON.stringify(items))
+                } catch (e) {
+                    console.warn('Storage unavailable', e)
+                }
+            }
+            function clearForm() {
+                $('form').reset();
+                editing = null;
+                $('submitBtn').textContent = 'Adicionar ao pedido →';
+                $('cancelBtn').hidden = true;
+                preview()
+            }
+            function cell(tr, s, cls='') {
+                let td = tr.insertCell();
+                td.textContent = s;
+                if (cls)
+                    td.className = cls;
+                return td
+            }
+            function render() {
+                let body = $('rows');
+                body.replaceChildren();
+                let sumV = 0
+                  , sumQ = 0
+                  , sumT = 0;
+                if (items.length === 0) {
+                    let tr = body.insertRow();
+                    let td = cell(tr, 'Nenhum item adicionado.');
+                    td.colSpan = 8;
+                    td.className = 'empty'
+                }
+                items.forEach( (item, i) => {
+                    let r = calc(item.vol, item.t, item.price);
+                    sumV += item.vol;
+                    sumQ += r.qty;
+                    sumT += r.total;
+                    let tr = body.insertRow();
+                    cell(tr, item.name);
+                    cell(tr, fmt(item.t * 1000, 0) + ' mm');
+                    cell(tr, fmt(item.vol), 'num');
+                    cell(tr, fmt(r.qty), 'num');
+                    cell(tr, fmt(r.whole, 0), 'num');
+                    cell(tr, money(r.unit), 'num');
+                    cell(tr, money(r.total), 'num');
+                    let td = tr.insertCell();
+                    let edit = document.createElement('button');
+                    edit.className = 'table-btn';
+                    edit.textContent = 'Editar';
+                    edit.onclick = () => {
+                        editing = i;
+                        $('produto').value = item.name;
+                        $('volume').value = String(item.vol).replace('.', ',');
+                        $('espessura').value = String(item.t);
+                        $('preco').value = String(item.price).replace('.', ',');
+                        $('submitBtn').textContent = 'Salvar alterações →';
+                        $('cancelBtn').hidden = false;
+                        preview();
+                        $('form').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        })
+                    }
+                    ;
+                    let del = document.createElement('button');
+                    del.className = 'table-btn remove';
+                    del.textContent = 'Excluir';
+                    del.onclick = () => {
+                        items.splice(i, 1);
+                        persist();
+                        if (editing !== null)
+                            clearForm();
+                        render()
+                    }
+                    ;
+                    td.append(edit, del)
+                }
+                );
+                $('grand').textContent = money(sumT);
+                $('itemCount').textContent = items.length;
+                $('countLabel').textContent = `(${items.length})`;
+                $('sumVol').textContent = fmt(sumV) + ' m³';
+                $('sumQty').textContent = fmt(sumQ)
+            }
+            $('form').addEventListener('submit', e => {
+                e.preventDefault();
+                let x = current();
+                if (!x.name || !x.valid) {
+                    $('message').textContent = 'Preencha a descrição, o volume positivo e o preço válido.';
+                    return
+                }
+                let r = calc(x.vol, x.t, x.price);
+                if (!Object.values(r).every(Number.isFinite)) {
+                    $('message').textContent = 'Os valores excedem o intervalo permitido.';
+                    return
+                }
+                let entry = {
+                    name: x.name,
+                    vol: x.vol,
+                    t: x.t,
+                    price: x.price
+                };
+                if (editing === null)
+                    items.push(entry);
+                else
+                    items[editing] = entry;
+                persist();
+                render();
+                clearForm();
+                $('produto').focus()
+            }
+            );
+            ['volume', 'espessura', 'preco'].forEach(id => $(id).addEventListener('input', preview));
+            $('resetBtn').onclick = clearForm;
+            $('cancelBtn').onclick = clearForm;
+            $('clearBtn').onclick = () => {
+                if (items.length && confirm('Excluir todos os itens do pedido?')) {
+                    items = [];
+                    persist();
+                    render();
+                    clearForm()
+                }
+            }
+            ;
+            function csvValue(s) {
+                let txt = String(s);
+                if (/^[\s]*[=+@\-\t\r]/.test(txt))
+                    txt = "'" + txt;
+                return '"' + txt.replace(/"/g, '""') + '"'
+            }
+            $('exportBtn').onclick = () => {
+                if (!items.length) {
+                    alert('Adicione pelo menos um item antes de exportar.');
+                    return
+                }
+                let rows = [['Produto', 'Espessura mm', 'Volume m3', 'Chapas equivalentes', 'Chapas inteiras', 'Preco por chapa R$', 'Total R$'], ...items.map(i => {
+                    let r = calc(i.vol, i.t, i.price);
+                    return [i.name, i.t * 1000, i.vol, r.qty, r.whole, r.unit, r.total]
+                }
+                )];
+                let csv = '\uFEFF' + rows.map(row => row.map(csvValue).join(';')).join('\r\n');
+                let url = URL.createObjectURL(new Blob([csv],{
+                    type: 'text/csv;charset=utf-8'
+                }));
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'madville_conversao_chapas.csv';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout( () => URL.revokeObjectURL(url), 1000)
+            }
+            ;
+            render();
+            preview();
+        </script>
+    </body>
 </html>
