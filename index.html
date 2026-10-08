@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madville | Calculadora de Chapas</title>
+
+  <style>
+    :root {
+      --verde: #20652b;
+      --verde-escuro: #14451e;
+      --verde-claro: #eaf5ec;
+      --fundo: #f5f8f5;
+      --texto: #1c2b20;
+      --cinza: #627366;
+      --borda: #dce8de;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      background: var(--verde);
+      color: white;
+      padding: 24px;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 115px;
+      height: 95px;
+      object-fit: contain;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 0;
+      color: #d8eadb;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 28px auto;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 22px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.035);
+    }
+
+    h2 {
+      margin: 0 0 23px;
+      font-size: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.wide {
+      grid-column: span 2;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--cinza);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--borda);
+      border-radius: 9px;
+      font-size: 15px;
+      background: white;
+      color: var(--texto);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #a1d4a9;
+      border-color: var(--verde);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      filter: brightness(.94);
+    }
+
+    .primary {
+      background: var(--verde);
+      color: white;
+    }
+
+    .secondary {
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+    }
+
+    .danger {
+      background: #fff0f0;
+      color: #b52b2b;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 25px;
+    }
+
+    .result {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--verde-claro);
+      min-width: 0;
+    }
+
+    .result span {
+      font-size: 13px;
+      color: var(--cinza);
+    }
+
+    .result strong {
+      display: block;
+      font-size: 27px;
+      margin-top: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .result.highlight {
+      background: var(--verde);
+      color: white;
+    }
+
+    .result.highlight span {
+      color: #d8eadb;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 850px;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    th {
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+      text-align: left;
+      font-size: 12px;
+    }
+
+    th, td {
+      padding: 13px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    td {
+      font-size: 13px;
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      font-weight: bold;
+    }
+
+    .summary strong {
+      color: var(--verde);
+      font-size: 23px;
+    }
+
+    .note {
+      color: var(--cinza);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--cinza);
+      font-size: 12px;
+    }
+
+    @media(max-width: 700px) {
+      .grid, .results {
+        grid-template-columns: 1fr;
+      }
+
+      .field.wide {
+        grid-column: span 1;
+      }
+
+      header h1 {
+        font-size: 23px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <img src="logo.png" alt="Madville" class="logo">
+    <div>
+      <h1>Calculadora de Chapas</h1>
+      <p>Madville | Departamento de Compras</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>Conversão de Chapas</h2>
+
+    <form id="formulario">
+      <div class="grid">
+
+        <div class="field wide">
+          <label for="produto">Produto</label>
+          <input id="produto"
+                 type="text"
+                 placeholder="Ex.: MDF Branco 18 mm"
+                 required>
+        </div>
+
+        <div class="field">
+          <label for="quantidade">Quantidade (m³)</label>
+          <input id="quantidade"
+                 type="text"
+                 inputmode="decimal"
+                 placeholder="Ex.: 1,5"
+                 required>
+        </div>
+
+        <div class="field">
+          <label for="espessura">Espessura</label>
+          <select id="espessura">
+            <option value="0.006">06 mm</option>
+            <option value="0.015">15 mm</option>
+            <option value="0.018" selected>18 mm</option>
+            <option value="0.025">25 mm</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="preco">Preço por m³ (R$)</label>
+          <input id="preco"
+                 type="text"
+                 inputmode="decimal"
+                 placeholder="Ex.: 1500,00"
+                 required>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary">
+          + Adicionar item
+        </button>
+
+        <button type="button" class="secondary"
+                onclick="limparCampos()">
+          Limpar campos
+        </button>
+      </div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <div class="result">
+        <span>Quantidade de chapas</span>
+        <strong id="resultadoQuantidade">—</strong>
+      </div>
+
+      <div class="result">
+        <span>Preço por chapa</span>
+        <strong id="resultadoPreco">—</strong>
+      </div>
+
+      <div class="result highlight">
+        <span>Valor total do item</span>
+        <strong id="resultadoTotal">—</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+
+    <h2>Itens do Pedido</h2>
+
+    <div class="actions">
+      <button class="secondary" onclick="exportarCSV()">
+        Exportar Excel (CSV)
+      </button>
+
+      <button class="secondary" onclick="window.print()">
+        Imprimir
+      </button>
+
+      <button class="danger" onclick="limparPedido()">
+        Limpar pedido
+      </button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Espessura</th>
+            <th>Volume m³</th>
+            <th>Chapas</th>
+            <th>Chapas inteiras</th>
+            <th>Preço/chapa</th>
+            <th>Total</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaItens"></tbody>
+      </table>
+    </div>
+
+    <div class="summary">
+      <div>
+        Itens: <span id="totalItens">0</span>
+      </div>
+      <div>
+        Chapas equivalentes:
+        <span id="totalChapas">0</span>
+      </div>
+      <div>
+        Total do pedido:
+        <strong id="totalPedido">R$ 0,00</strong>
+      </div>
+    </div>
+
+    <p class="note">
+      Quantidades fracionárias representam chapas equivalentes.
+      O arredondamento para chapas inteiras é apenas indicativo.
+    </p>
+
+  </section>
+
+  <section class="card">
+    <h2>Parâmetros do Cálculo</h2>
+
+    <p><b>Área nominal:</b> 5,0875 m²</p>
+    <p><b>Acréscimo no preço:</b> 3,25%</p>
+    <p><b>Espessuras:</b> 06, 15, 18 e 25 mm</p>
+
+    <p class="note">
+      Quantidade = Volume / (5,0875 × Espessura)
+    </p>
+
+    <p class="note">
+      Preço/chapa = Preço/m³ × Espessura × 5,0875 × 1,0325
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  MADVILLE | GMAD — Sistema de Apoio ao Departamento de Compras
+</footer>
+
+<script>
+  const AREA = 5.0875;
+  const ACRESCIMO = 1.0325;
+  const CHAVE = "madville_calculadora_chapas_v1";
+
+  const $ = id => document.getElementById(id);
+
+  let itens = [];
+
+  try {
+    const salvos = JSON.parse(localStorage.getItem(CHAVE) || "[]");
+    itens = Array.isArray(salvos) ? salvos : [];
+  } catch {
+    itens = [];
+  }
+
+  function numero(valor) {
+    let texto = String(valor).trim().replace(/\s/g, "");
+
+    if (texto.includes(",") && texto.includes(".")) {
+      texto = texto.replace(/\./g, "").replace(",", ".");
+    } else if (texto.includes(",")) {
+      texto = texto.replace(",", ".");
+    }
+
+    if (!texto) return NaN;
+
+    return Number(texto);
+  }
+
+  function formato(valor, casas = 4) {
+    return new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: casas,
+      maximumFractionDigits: casas
+    }).format(valor);
+  }
+
+  function dinheiro(valor) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    }).format(valor);
+  }
+
+  function calcular(volume, espessura, preco) {
+    const chapas = volume / (AREA * espessura);
+
+    const precoChapa =
+      preco * espessura * AREA * ACRESCIMO;
+
+    const total = chapas * precoChapa;
+
+    return {
+      chapas,
+      chapasInteiras: Math.ceil(chapas - 1e-10),
+      precoChapa,
+      total
+    };
+  }
+
+  function lerCampos() {
+    const volume = numero($("quantidade").value);
+    const espessura = Number($("espessura").value);
+    const preco = numero($("preco").value);
+
+    const valido =
+      Number.isFinite(volume) &&
+      volume > 0 &&
+      Number.isFinite(preco) &&
+      preco >= 0;
+
+    return { volume, espessura, preco, valido };
+  }
+
+  function atualizarPreview() {
+    const dados = lerCampos();
+
+    $("resultadoQuantidade").textContent = "—";
+    $("resultadoPreco").textContent = "—";
+    $("resultadoTotal").textContent = "—";
+
+    if (!dados.valido) return;
+
+    const resultado = calcular(
+      dados.volume,
+      dados.espessura,
+      dados.preco
+    );
+
+    $("resultadoQuantidade").textContent =
+      formato(resultado.chapas);
+
+    $("resultadoPreco").textContent =
+      dinheiro(resultado.precoChapa);
+
+    $("resultadoTotal").textContent =
+      dinheiro(resultado.total);
+  }
+
+  function salvar() {
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(itens));
+    } catch {
+      alert("Não foi possível salvar os dados neste navegador.");
+    }
+  }
+
+  function adicionarItem(evento) {
+    evento.preventDefault();
+
+    const dados = lerCampos();
+    const produto = $("produto").value.trim();
+
+    if (!produto || !dados.valido) {
+      alert("Preencha corretamente todos os campos.");
+      return;
+    }
+
+    itens.push({
+      produto,
+      volume: dados.volume,
+      espessura: dados.espessura,
+      preco: dados.preco
+    });
+
+    salvar();
+    renderizarTabela();
+    limparCampos();
+  }
+
+  function limparCampos() {
+    $("formulario").reset();
+    $("produto").value = "";
+    $("quantidade").value = "";
+    $("preco").value = "";
+    atualizarPreview();
+  }
+
+  function excluirItem(indice) {
+    itens.splice(indice, 1);
+    salvar();
+    renderizarTabela();
+  }
+
+  function renderizarTabela() {
+    const tabela = $("tabelaItens");
+    tabela.replaceChildren();
+
+    let somaChapas = 0;
+    let somaTotal = 0;
+
+    if (!itens.length) {
+      const linha = tabela.insertRow();
+      const celula = linha.insertCell();
+
+      celula.colSpan = 8;
+      celula.textContent = "Nenhum item adicionado.";
+      celula.style.textAlign = "center";
+    }
+
+    itens.forEach((item, indice) => {
+      const r = calcular(
+        item.volume,
+        item.espessura,
+        item.preco
+      );
+
+      somaChapas += r.chapas;
+      somaTotal += r.total;
+
+      const linha = tabela.insertRow();
+
+      const dados = [
+        item.produto,
+        formato(item.espessura * 1000, 0) + " mm",
+        formato(item.volume),
+        formato(r.chapas),
+        formato(r.chapasInteiras, 0),
+        dinheiro(r.precoChapa),
+        dinheiro(r.total)
+      ];
+
+      dados.forEach(valor => {
+        const celula = linha.insertCell();
+        celula.textContent = valor;
+      });
+
+      const celulaAcao = linha.insertCell();
+      const botao = document.createElement("button");
+
+      botao.textContent = "Excluir";
+      botao.className = "danger";
+      botao.onclick = () => excluirItem(indice);
+
+      celulaAcao.appendChild(botao);
+    });
+
+    $("totalItens").textContent = itens.length;
+    $("totalChapas").textContent = formato(somaChapas);
+    $("totalPedido").textContent = dinheiro(somaTotal);
+  }
+
+  function limparPedido() {
+    if (!itens.length) return;
+
+    if (confirm("Deseja excluir todos os itens do pedido?")) {
+      itens = [];
+      salvar();
+      renderizarTabela();
+    }
+  }
+
+  function exportarCSV() {
+    if (!itens.length) {
+      alert("Adicione itens antes de exportar.");
+      return;
+    }
+
+    const linhas = [[
+      "Produto",
+      "Espessura mm",
+      "Volume m3",
+      "Chapas equivalentes",
+      "Chapas inteiras",
+      "Preco por chapa",
+      "Valor total"
+    ]];
+
+    itens.forEach(item => {
+      const r = calcular(
+        item.volume,
+        item.espessura,
+        item.preco
+      );
+
+      linhas.push([
+        item.produto,
+        item.espessura * 1000,
+        item.volume,
+        r.chapas,
+        r.chapasInteiras,
+        r.precoChapa,
+        r.total
+      ]);
+    });
+
+    const csv = "\uFEFF" + linhas
+      .map(linha =>
+        linha.map(valor =>
+          '"' + String(valor).replace(/"/g, '""') + '"'
+        ).join(";")
+      )
+      .join("\r\n");
+
+    const arquivo = new Blob([csv], {
+      type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(arquivo);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "pedido_chapas_madville.csv";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  $("formulario").addEventListener("submit", adicionarItem);
+
+  ["quantidade", "espessura", "preco"].forEach(id => {
+    $(id).addEventListener("input", atualizarPreview);
+  });
+
+  renderizarTabela();
+  atualizarPreview();
+</script>
+
+</body>
+</html>
