@@ -639,6 +639,223 @@
                     margin: 12mm
                 }
             }
+
+            /* PDF intake */
+            .pdf-panel {
+                margin-top: 22px
+            }
+
+            .upload-area {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                border: 1px dashed #cbdcd0;
+                background: #fbfdfb;
+                border-radius: 10px;
+                padding: 22px
+            }
+
+            .upload-area .upload-title {
+                font-weight: 680;
+                font-size: 13px;
+                margin-bottom: 6px
+            }
+
+            .upload-area p {
+                margin: 0;
+                color: #91a096;
+                font-size: 12px;
+                line-height: 1.5
+            }
+
+            .pdf-status {
+                margin-top: 13px;
+                font-size: 12px;
+                color: #647b6a
+            }
+
+            .pdf-status.error {
+                color: #a84444
+            }
+
+            .review-wrap {
+                margin-top: 18px
+            }
+
+            .review-wrap[hidden] {
+                display: none
+            }
+
+            .review-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 13px
+            }
+
+            .review-head p {
+                margin: 5px 0 0;
+                font-size: 11px;
+                color: #86948a
+            }
+
+            .review-table {
+                min-width: 760px
+            }
+
+            .review-table input,.review-table select {
+                height: 35px;
+                padding: 6px 8px;
+                border: 1px solid #dae5dc;
+                border-radius: 6px;
+                width: 100%;
+                font-size: 12px;
+                color: #29382d
+            }
+
+            .review-table .review-name {
+                min-width: 205px
+            }
+
+            .review-table .review-num {
+                min-width: 90px
+            }
+
+            .review-table td {
+                padding: 9px
+            }
+
+            .review-note {
+                font-size: 11px;
+                color: #9b7450;
+                background: #fffaf1;
+                border: 1px solid #eee3d0;
+                border-radius: 7px;
+                padding: 11px;
+                margin-top: 12px;
+                line-height: 1.5
+            }
+
+            .pdf-actions {
+                display: flex;
+                gap: 9px;
+                margin-top: 16px;
+                flex-wrap: wrap
+            }
+
+            .pdf-source {
+                font-size: 11px;
+                color: #8a998f
+            }
+
+            .review-table .invalid {
+                border-color: #c96969;
+                background: #fff8f8
+            }
+
+            @media print {
+                .pdf-panel {
+                    display: none!important
+                }
+            }
+
+            .audit-strip {
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin: 14px 0;
+                padding: 12px 14px;
+                background: #f7faf8;
+                border: 1px solid #e6ece7;
+                border-radius: 10px;
+                font-size: 12px;
+                color: #526458
+            }
+
+            .audit-strip strong {
+                color: #1d3123
+            }
+
+            .review-table {
+                min-width: 1220px
+            }
+
+            .review-table input.review-num {
+                max-width: 112px
+            }
+
+            .review-table .review-name {
+                min-width: 260px
+            }
+
+            .review-table td {
+                vertical-align: middle
+            }
+
+            .audit-status {
+                font-size: 11px;
+                font-weight: 700;
+                white-space: nowrap
+            }
+
+            .audit-status.ok {
+                color: #247242
+            }
+
+            .audit-status.warn {
+                color: #a86c18
+            }
+
+            .audit-status.err {
+                color: #a43737
+            }
+
+            .audit-footnote {
+                font-size: 11px;
+                color: #7e8c81
+            }
+
+            .review-table input[type=checkbox] {
+                accent-color: #21652d
+            }
+
+            .review-table tbody tr:has(.err) {
+                background: #fffafa
+            }
+
+            @media print {
+                .pdf-panel {
+                    display: none!important
+                }
+            }
+
+            @media print {
+                .print-only {
+                    display: block!important;
+                    font-size: 13px;
+                    font-weight: 700;
+                    margin-bottom: 14px
+                }
+
+                .order-panel {
+                    break-inside: auto
+                }
+
+                .order-panel tr {
+                    break-inside: avoid
+                }
+
+                .order-panel .order-actions {
+                    display: none!important
+                }
+
+                .order-panel table th:last-child,.order-panel table td:last-child {
+                    display: none!important
+                }
+            }
         </style>
     </head>
     <body>
@@ -656,13 +873,17 @@
             </div>
         </header>
         <main class="shell">
-            <div class="breadcrumbs">Compras / Ferramentas / Conversão de chapas</div>
+            <div class="breadcrumbs">
+                COMPRAS <span style="color:#b4beb7">/</span>
+                FERRAMENTAS <span style="color:#b4beb7">/</span>
+                CONVERSÃO
+            </div>
             <div class="intro">
                 <div>
                     <h1>Conversão de chapas</h1>
                     <p>Volumes, espessuras e preços — sem cálculos manuais.</p>
                 </div>
-                <div class="note-pill">Área nominal 5,0875 m²</div>
+                <div class="note-pill">Conversão auditável · v4.0</div>
             </div>
             <div class="workspace">
                 <section class="panel panel-pad">
@@ -756,7 +977,64 @@
                     </section>
                 </aside>
             </div>
+            <section class="panel panel-pad pdf-panel" id="pdfPanel">
+                <div class="panel-top">
+                    <span class="section-title">Importar pedido em PDF</span>
+                    <span class="section-hint">Leitura estruturada · conferência financeira</span>
+                </div>
+                <div class="upload-area">
+                    <div>
+                        <div class="upload-title">Selecione um PDF do fornecedor</div>
+                        <p>
+                            Reconhecemos a espessura na descrição (ex.: 25X1850X2750), Qtd em m³ e Val.Unit em R$/m³.<br>Arquivos digitalizados sem texto pesquisável exigem OCR. O sistema não inventa valores ausentes.
+                        </p>
+                    </div>
+                    <div>
+                        <input id="pdfFile" type="file" accept="application/pdf,.pdf" hidden>
+                        <button class="primary" id="choosePdf" type="button">Selecionar PDF →</button>
+                    </div>
+                </div>
+                <div id="pdfStatus" class="pdf-status" role="status" aria-live="polite">Nenhum PDF selecionado. Os arquivos não são enviados a servidor.</div>
+                <div class="review-wrap" id="reviewWrap" hidden>
+                    <div class="review-head">
+                        <div>
+                            <div class="section-title">Revisão dos itens encontrados</div>
+                            <p>Confira as colunas e as unidades. Apenas linhas marcadas e válidas serão importadas.</p>
+                        </div>
+                        <span class="pdf-source" id="pdfSource"></span>
+                    </div>
+                    <div class="audit-strip" id="auditStrip" aria-live="polite"></div>
+                    <div class="table-wrap">
+                        <table class="review-table">
+                            <thead>
+                                <tr>
+                                    <th>Incluir</th>
+                                    <th>Código / produto</th>
+                                    <th>Dimensões</th>
+                                    <th>Esp.</th>
+                                    <th>Volume m³</th>
+                                    <th>R$/m³</th>
+                                    <th>Total PDF</th>
+                                    <th>Área m²</th>
+                                    <th>Chapas</th>
+                                    <th>R$/chapa</th>
+                                    <th>Total convertido</th>
+                                    <th>Diferença</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviewRows"></tbody>
+                        </table>
+                    </div>
+                    <div class="review-note">O total PDF é comparado ao produto entre volume e valor unitário (antes do acréscimo de 3,25%). Itens com divergência, campos ausentes ou dimensão não reconhecida exigem correção e confirmação. Os totais informados em rodapés podem incluir impostos e outras condições comerciais.</div>
+                    <div class="pdf-actions">
+                        <button class="primary" type="button" id="confirmPdf">Importar itens validados →</button>
+                        <button class="bare" type="button" id="cancelPdf">Cancelar importação</button>
+                    </div>
+                </div>
+            </section>
             <section class="panel order-panel">
+                <div class="print-only" style="display:none">RELATÓRIO DE CONVERSÃO · MADVILLE — Quantidade em chapas, área por unidade e valores convertidos (acréscimo de 3,25%).</div>
                 <div class="order-head">
                     <div class="section-title">
                         Itens do pedido <span id="countLabel" style="color:#a1ada4;font-weight:500;margin-left:5px">(0)</span>
@@ -774,6 +1052,7 @@
                                 <th>Produto</th>
                                 <th>Esp.</th>
                                 <th>Volume m³</th>
+                                <th>Área m²</th>
                                 <th>Chapas equiv.</th>
                                 <th>Inteiras</th>
                                 <th>R$/chapa</th>
@@ -788,6 +1067,7 @@
             </section>
             <div class="footer">Madville · Ferramenta interna de apoio a compras · Os dados ficam armazenados apenas neste navegador.</div>
         </main>
+        <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
         <script>
             'use strict';
             const AREA = 5.0875
@@ -823,9 +1103,9 @@
                 }
                 return /^\d+(\.\d+)?$/.test(s) ? Number(s) : NaN
             }
-            function calc(vol, t, price) {
-                let qty = vol / (AREA * t)
-                  , unit = price * AREA * t * FATOR;
+            function calc(vol, t, price, area=AREA) {
+                let qty = vol / (area * t)
+                  , unit = price * area * t * FATOR;
                 return {
                     qty,
                     unit,
@@ -891,11 +1171,11 @@
                 if (items.length === 0) {
                     let tr = body.insertRow();
                     let td = cell(tr, 'Nenhum item adicionado.');
-                    td.colSpan = 8;
+                    td.colSpan = 9;
                     td.className = 'empty'
                 }
                 items.forEach( (item, i) => {
-                    let r = calc(item.vol, item.t, item.price);
+                    let r = calc(item.vol, item.t, item.price, item.area || AREA);
                     sumV += item.vol;
                     sumQ += r.qty;
                     sumT += r.total;
@@ -903,6 +1183,7 @@
                     cell(tr, item.name);
                     cell(tr, fmt(item.t * 1000, 0) + ' mm');
                     cell(tr, fmt(item.vol), 'num');
+                    cell(tr, fmt(item.area || AREA, 4), 'num');
                     cell(tr, fmt(r.qty), 'num');
                     cell(tr, fmt(r.whole, 0), 'num');
                     cell(tr, money(r.unit), 'num');
@@ -997,9 +1278,9 @@
                     alert('Adicione pelo menos um item antes de exportar.');
                     return
                 }
-                let rows = [['Produto', 'Espessura mm', 'Volume m3', 'Chapas equivalentes', 'Chapas inteiras', 'Preco por chapa R$', 'Total R$'], ...items.map(i => {
-                    let r = calc(i.vol, i.t, i.price);
-                    return [i.name, i.t * 1000, i.vol, r.qty, r.whole, r.unit, r.total]
+                let rows = [['Produto', 'Espessura mm', 'Volume m3', 'Area m2', 'Chapas equivalentes', 'Chapas inteiras', 'Preco por chapa R$', 'Total R$'], ...items.map(i => {
+                    let r = calc(i.vol, i.t, i.price, i.area || AREA);
+                    return [i.name, i.t * 1000, i.vol, i.area || AREA, r.qty, r.whole, r.unit, r.total]
                 }
                 )];
                 let csv = '\uFEFF' + rows.map(row => row.map(csvValue).join(';')).join('\r\n');
@@ -1013,6 +1294,520 @@
                 a.click();
                 a.remove();
                 setTimeout( () => URL.revokeObjectURL(url), 1000)
+            }
+            ;
+
+            // PDF importer v4.0: coordinate-aware table parsing and staged financial audit.
+            const pdfStatus = $('pdfStatus')
+              , reviewWrap = $('reviewWrap')
+              , reviewRows = $('reviewRows');
+            let pdfDraft = []
+              , pdfSignature = ''
+              , pdfDocumentTotals = [];
+            function setPdfStatus(message, error=false) {
+                pdfStatus.textContent = message;
+                pdfStatus.classList.toggle('error', error)
+            }
+            function resetPdf() {
+                pdfDraft = [];
+                pdfSignature = '';
+                pdfDocumentTotals = [];
+                reviewRows.replaceChildren();
+                reviewWrap.hidden = true;
+                $('pdfFile').value = '';
+                setPdfStatus('Nenhum PDF selecionado. A leitura ocorre somente neste navegador.')
+            }
+            $('choosePdf').onclick = () => $('pdfFile').click();
+            $('cancelPdf').onclick = resetPdf;
+            function pdfNum(v) {
+                let x = String(v || '').replace(/R\$|\s/g, '').trim();
+                if (!x)
+                    return NaN;
+                if (x.includes(',') && x.includes('.'))
+                    x = x.lastIndexOf(',') > x.lastIndexOf('.') ? x.replace(/\./g, '').replace(',', '.') : x.replace(/,/g, '');
+                else if (x.includes(','))
+                    x = x.replace(',', '.');
+                else if (/^\d{1,3}(\.\d{3})+$/.test(x))
+                    x = x.replace(/\./g, '');
+                return /^\d+(\.\d+)?$/.test(x) ? Number(x) : NaN
+            }
+            function dimensions(desc) {
+                let m = String(desc).match(/(?:^|\D)(0?6|15|18|25)\s*[x×]\s*(\d{3,4})\s*[x×]\s*(\d{3,4})(?!\d)/i);
+                return m ? {
+                    t: Number(m[1]) / 1000,
+                    w: Number(m[2]),
+                    h: Number(m[3]),
+                    label: `${Number(m[1])} × ${m[2]} × ${m[3]}`
+                } : null
+            }
+            function thicknessFromDescription(desc) {
+                let d = dimensions(desc);
+                if (d)
+                    return d.t;
+                let m = String(desc).match(/(?:^|\D)(0?6|15|18|25)\s*mm\b/i);
+                return m ? Number(m[1]) / 1000 : null
+            }
+            function normalize(s) {
+                return String(s || '').replace(/\s+/g, ' ').trim()
+            }
+            function audit(r) {
+                let notes = [];
+                let t = r.t
+                  , vol = r.vol
+                  , price = r.price
+                  , total = r.sourceTotal;
+                let valid = !!r.name && allowed.includes(t) && Number.isFinite(vol) && vol > 0 && Number.isFinite(price) && price >= 0;
+                if (!valid)
+                    notes.push('Campos incompletos');
+                if (!r.dimension)
+                    notes.push('Dimensões não confirmadas');
+                if (!Number.isFinite(total))
+                    notes.push('Total PDF ausente');
+                let delta = Number.isFinite(total) && Number.isFinite(vol) && Number.isFinite(price) ? (Math.round(vol * price * 100) / 100) - total : NaN;
+                if (Number.isFinite(delta) && Math.abs(delta) > 0.03)
+                    notes.push('Valor divergente');
+                let state = !valid || (!r.dimension && r.origin === 'pdf') || !Number.isFinite(delta) ? 'err' : Math.abs(delta) > 0.03 ? 'warn' : 'ok';
+                if (state !== 'ok' && r.manualChecked && valid && Number.isFinite(total) && !!r.dimension)
+                    state = 'reviewed';
+                return {
+                    state,
+                    delta,
+                    notes,
+                    valid
+                };
+            }
+            function createRow({code, desc, price, vol, total, page, rowNo}) {
+                desc = normalize(desc);
+                const d = dimensions(desc);
+                let t = thicknessFromDescription(desc);
+                return {
+                    code: normalize(code),
+                    name: (normalize(code) ? normalize(code) + ' · ' : '') + desc,
+                    t: t || null,
+                    vol: pdfNum(vol),
+                    price: pdfNum(price),
+                    sourceTotal: pdfNum(total),
+                    dimension: d,
+                    origin: 'pdf',
+                    page,
+                    rowNo,
+                    selected: false,
+                    manualChecked: false
+                };
+            }
+            // Compact text-layer fallback for exports that lack usable table coordinates.
+            // Recognizes a tabular row even when PDF.js splits text into many fragments.
+            function extractRow(text, page) {
+                const t = normalize(text);
+                const start = t.match(/^\s*(?:\d{1,3}\s+)?(\d{4,7})\s+(.+)/);
+                if (!start)
+                    return null;
+                let tail = start[2];
+                const dims = dimensions(tail);
+                if (!dims)
+                    return null;
+                // after the dimensions: optional reference/pack code, followed by price, volume, item total.
+                let prices = [...tail.matchAll(/\d[\d.]*,\d{2,3}/g)];
+                if (prices.length < 3)
+                    return null;
+                let n = prices.map(x => x[0]);
+                let candidates = [];
+                for (let i = 0; i < n.length - 2; i++) {
+                    let price = pdfNum(n[i])
+                      , vol = pdfNum(n[i + 1])
+                      , total = pdfNum(n[i + 2]);
+                    if (Number.isFinite(price) && price > 50 && Number.isFinite(vol) && vol > 0 && vol < 1000 && Number.isFinite(total) && total > 0)
+                        candidates.push({
+                            i,
+                            delta: Math.abs(price * vol - total),
+                            price: n[i],
+                            vol: n[i + 1],
+                            total: n[i + 2]
+                        });
+                }
+                let v = candidates.sort( (a, b) => a.delta - b.delta)[0];
+                if (!v || v.delta > Math.max(2, pdfNum(v.total) * 0.02))
+                    return null;
+                const last = prices[v.i].index;
+                return createRow({
+                    code: start[1],
+                    desc: tail.slice(0, last),
+                    price: v.price,
+                    vol: v.vol,
+                    total: v.total,
+                    page
+                });
+            }
+            function lineGroups(content) {
+                let arr = content.items.filter(v => v.str && v.str.trim()).map(it => ({
+                    x: it.transform[4],
+                    y: it.transform[5],
+                    width: it.width || 0,
+                    text: normalize(it.str)
+                })).sort( (a, b) => b.y - a.y || a.x - b.x);
+                let lines = [];
+                for (let part of arr) {
+                    let line = lines.find(l => Math.abs(l.y - part.y) <= 2.8);
+                    if (!line) {
+                        line = {
+                            y: part.y,
+                            parts: []
+                        };
+                        lines.push(line)
+                    }
+                    line.parts.push(part);
+                }
+                return lines.map(l => ({
+                    ...l,
+                    parts: l.parts.sort( (a, b) => a.x - b.x),
+                    text: l.parts.map(p => p.text).join(' ')
+                }));
+            }
+            function parsePageRows(content, page) {
+                const lines = lineGroups(content);
+                const headerIndex = lines.findIndex(l => /c[oó]digo/i.test(l.text) && /produto/i.test(l.text) && /qtd/i.test(l.text));
+                if (headerIndex < 0)
+                    return lines.map(l => extractRow(l.text, page)).filter(Boolean);
+                let hdr = lines[headerIndex];
+                // Fixed spatial regions determined from the actual header, including right-aligned numeric fields.
+                let text = hdr.parts;
+                function anchor(pattern) {
+                    const p = text.find(x => pattern.test(x.text));
+                    return p ? p.x : NaN
+                }
+                let xCode = anchor(/c[oó]digo/i)
+                  , xProduct = anchor(/produto/i)
+                  , xUnit = anchor(/val\.?\s*unit/i)
+                  , xQty = anchor(/qtd|quantidade/i)
+                  , xTotal = anchor(/total\s*item/i);
+                let xNext = anchor(/%icms|icms/i);
+                // The initial numeric column is Val.Unit. Header text is occasionally split; use the whole header line if needed.
+                if (!Number.isFinite(xUnit) && Number.isFinite(xQty))
+                    xUnit = xQty - (xQty - xProduct) * .28;
+                if (!Number.isFinite(xTotal) && Number.isFinite(xQty))
+                    xTotal = xQty + (xQty - xUnit) * 1.15;
+                if (!Number.isFinite(xNext) && Number.isFinite(xTotal))
+                    xNext = xTotal + (xTotal - xQty) * 1.25;
+                if (![xCode, xProduct, xUnit, xQty, xTotal, xNext].every(Number.isFinite))
+                    return lines.map(l => extractRow(l.text, page)).filter(Boolean);
+                const cols = [xCode, xProduct, xUnit, xQty, xTotal, xNext];
+                if (cols.some( (v, i) => i && v <= cols[i - 1]))
+                    return lines.map(l => extractRow(l.text, page)).filter(Boolean);
+                const data = [];
+                let prev = null;
+                for (const l of lines.slice(headerIndex + 1)) {
+                    // Text aligned to the LEFT is assigned using the actual column starts;
+                    // numeric cells are often RIGHT-aligned, so their right edge must remain in the column.
+                    let c = Array(5).fill('');
+                    for (let piece of l.parts) {
+                        const mid = piece.x + Math.min(piece.width * .5, 8);
+                        let col = mid < xProduct ? 0 : mid < xUnit ? 1 : mid < xQty ? 2 : mid < xTotal ? 3 : mid < xNext ? 4 : -1;
+                        if (col >= 0)
+                            c[col] += (c[col] ? ' ' : '') + piece.text;
+                    }
+                    const code = c[0].match(/(?:^|\s)(\d{4,7})\s*$/)?.[1] || '';
+                    const desc = normalize(c[1])
+                      , price = normalize(c[2])
+                      , vol = normalize(c[3])
+                      , total = normalize(c[4]);
+                    if (code && desc && dimensions(desc)) {
+                        const row = createRow({
+                            code,
+                            desc,
+                            price,
+                            vol,
+                            total,
+                            page,
+                            rowNo: data.length + 1
+                        });
+                        data.push(row);
+                        prev = row;
+                        continue;
+                    }
+                    if (code && desc) {
+                        let fallback = extractRow(l.text, page);
+                        if (fallback) {
+                            data.push(fallback);
+                            prev = fallback;
+                            continue
+                        }
+                    }
+                    if (prev && desc && !price && !vol && !total && !/peso|total|observa/i.test(desc)) {
+                        prev.name = (prev.name + ' ' + desc).slice(0, 300);
+                        prev.dimension = dimensions(prev.name);
+                        prev.t = thicknessFromDescription(prev.name);
+                    }
+                }
+                // Global fallback: complete textual lines can rescue differently aligned cells.
+                const textual = lines.slice(headerIndex + 1).map(l => extractRow(l.text, page)).filter(Boolean);
+                for (const alt of textual) {
+                    let row = data.find(d => d.code === alt.code);
+                    if (row) {
+                        if (!Number.isFinite(row.vol))
+                            row.vol = alt.vol;
+                        if (!Number.isFinite(row.price))
+                            row.price = alt.price;
+                        if (!Number.isFinite(row.sourceTotal))
+                            row.sourceTotal = alt.sourceTotal;
+                    } else
+                        data.push(alt);
+                }
+                return data;
+            }
+            function addReviewCell(tr, child) {
+                let td = tr.insertCell();
+                if (typeof child === 'string')
+                    td.textContent = child;
+                else
+                    td.append(child);
+                return td
+            }
+            function field(initial, label, onChange, wide=false) {
+                let v = document.createElement('input');
+                v.value = initial;
+                v.className = wide ? 'review-name' : 'review-num';
+                v.setAttribute('aria-label', label);
+                v.addEventListener(wide ? 'change' : 'input', () => onChange(v.value));
+                return v
+            }
+            function stageRender() {
+                reviewRows.replaceChildren();
+                reviewWrap.hidden = !pdfDraft.length;
+                let ok = 0
+                  , warn = 0
+                  , bad = 0
+                  , sumPdf = 0
+                  , sumCalc = 0;
+                pdfDraft.forEach( (r, i) => {
+                    let a = audit(r);
+                    if (a.state === 'ok')
+                        ok++;
+                    else if (a.state === 'reviewed' || a.state === 'warn')
+                        warn++;
+                    else
+                        bad++;
+                    if (Number.isFinite(r.sourceTotal))
+                        sumPdf += r.sourceTotal;
+                    if (Number.isFinite(r.vol) && Number.isFinite(r.price))
+                        sumCalc += r.vol * r.price;
+                    let tr = reviewRows.insertRow();
+                    let check = document.createElement('input');
+                    check.type = 'checkbox';
+                    check.checked = !!r.selected;
+                    check.setAttribute('aria-label', 'Importar ' + (i + 1));
+                    check.onchange = () => {
+                        r.selected = check.checked;
+                        refreshReviewSummary()
+                    }
+                    ;
+                    addReviewCell(tr, check);
+                    addReviewCell(tr, field(r.name, 'Descrição ' + (i + 1), v => {
+                        r.name = v;
+                        r.dimension = dimensions(v);
+                        r.t = thicknessFromDescription(v) || r.t;
+                        stageRender()
+                    }
+                    , true));
+                    addReviewCell(tr, r.dimension ? r.dimension.label : '—');
+                    let t = document.createElement('select');
+                    [6, 15, 18, 25].forEach(mm => {
+                        let o = document.createElement('option');
+                        o.value = String(mm / 1000);
+                        o.textContent = mm + ' mm';
+                        t.append(o)
+                    }
+                    );
+                    let blank = document.createElement('option');
+                    blank.value = '';
+                    blank.textContent = 'Confirmar';
+                    t.prepend(blank);
+                    t.value = r.t ? String(r.t) : '';
+                    t.onchange = () => {
+                        r.t = Number(t.value) || null;
+                        r.manualChecked = false;
+                        stageRender()
+                    }
+                    ;
+                    addReviewCell(tr, t);
+                    addReviewCell(tr, field(Number.isFinite(r.vol) ? String(r.vol).replace('.', ',') : '', 'Volume m³ ' + i, v => {
+                        r.vol = decimal(v);
+                        updateAuditOnly(tr, r)
+                    }
+                    ));
+                    addReviewCell(tr, field(Number.isFinite(r.price) ? String(r.price).replace('.', ',') : '', 'Preço por m³ ' + i, v => {
+                        r.price = decimal(v);
+                        updateAuditOnly(tr, r)
+                    }
+                    ));
+                    addReviewCell(tr, field(Number.isFinite(r.sourceTotal) ? String(r.sourceTotal).replace('.', ',') : '', 'Total do PDF ' + i, v => {
+                        r.sourceTotal = decimal(v);
+                        updateAuditOnly(tr, r)
+                    }
+                    ));
+                    const calculated = a.valid && r.dimension ? calc(r.vol, r.t, r.price, r.dimension.w * r.dimension.h / 1e6) : null;
+                    addReviewCell(tr, r.dimension ? fmt(r.dimension.w * r.dimension.h / 1e6, 4) : '—');
+                    addReviewCell(tr, calculated ? fmt(calculated.qty) : '—');
+                    addReviewCell(tr, calculated ? money(calculated.unit) : '—');
+                    addReviewCell(tr, calculated ? money(calculated.total) : '—');
+                    let difference = addReviewCell(tr, Number.isFinite(a.delta) ? money(a.delta) : '—');
+                    difference.className = 'audit-difference';
+                    let status = document.createElement('div');
+                    status.className = 'audit-status ' + (a.state === 'ok' ? 'ok' : a.state === 'err' ? 'err' : 'warn');
+                    status.textContent = a.state === 'ok' ? 'Conferido' : a.state === 'reviewed' ? 'Revisado' : a.state === 'warn' ? 'Divergência' : 'Revisar';
+                    status.title = a.notes.join('; ');
+                    addReviewCell(tr, status);
+                    if (a.state !== 'ok') {
+                        let box = document.createElement('label');
+                        box.className = 'audit-footnote';
+                        box.style.display = 'block';
+                        box.style.marginTop = '4px';
+                        let cb = document.createElement('input');
+                        cb.type = 'checkbox';
+                        cb.checked = r.manualChecked;
+                        cb.onchange = () => {
+                            r.manualChecked = cb.checked;
+                            updateAuditOnly(tr, r)
+                        }
+                        ;
+                        box.append(cb, document.createTextNode(' Confirmado manualmente'));
+                        status.append(box)
+                    }
+                }
+                );
+                refreshReviewSummary()
+            }
+            function updateAuditOnly(tr, r) {
+                let a = audit(r);
+                let cells = tr.cells
+                  , cv = a.valid && r.dimension ? calc(r.vol, r.t, r.price, r.dimension.w * r.dimension.h / 1e6) : null;
+                if (cells.length >= 13) {
+                    cells[8].textContent = cv ? fmt(cv.qty) : '—';
+                    cells[9].textContent = cv ? money(cv.unit) : '—';
+                    cells[10].textContent = cv ? money(cv.total) : '—'
+                }
+                let diff = tr.querySelector('.audit-difference');
+                if (diff)
+                    diff.textContent = Number.isFinite(a.delta) ? money(a.delta) : '—';
+                let status = tr.querySelector('.audit-status');
+                if (status) {
+                    status.className = 'audit-status ' + (a.state === 'ok' ? 'ok' : a.state === 'err' ? 'err' : 'warn');
+                    status.firstChild.textContent = a.state === 'ok' ? 'Conferido' : a.state === 'reviewed' ? 'Revisado' : a.state === 'warn' ? 'Divergência' : 'Revisar'
+                }
+                refreshReviewSummary()
+            }
+            function refreshReviewSummary() {
+                let ok = 0
+                  , pending = 0
+                  , chosen = 0;
+                let sumPdf = 0
+                  , sumCalc = 0;
+                for (let r of pdfDraft) {
+                    let a = audit(r);
+                    if (a.state === 'ok')
+                        ok++;
+                    else
+                        pending++;
+                    if (r.selected)
+                        chosen++;
+                    if (Number.isFinite(r.sourceTotal))
+                        sumPdf += r.sourceTotal;
+                    if (Number.isFinite(r.vol) && Number.isFinite(r.price))
+                        sumCalc += r.vol * r.price
+                }
+                let strip = $('auditStrip');
+                strip.replaceChildren();
+                for (let text of [`${pdfDraft.length} linhas identificadas`, `${ok} conferidas automaticamente`, `${pending} para revisão`, `${chosen} selecionadas`, `Soma de linhas PDF ${money(sumPdf)}`, `Soma recalculada ${money(sumCalc)}`]) {
+                    let b = document.createElement('span');
+                    b.textContent = text;
+                    strip.append(b)
+                }
+            }
+            $('pdfFile').onchange = async e => {
+                let file = e.target.files?.[0];
+                if (!file)
+                    return;
+                if (file.size > 15 * 1024 * 1024) {
+                    setPdfStatus('PDF maior que 15 MB.', true);
+                    return
+                }
+                if (!window.pdfjsLib) {
+                    setPdfStatus('Biblioteca PDF indisponível. Verifique a conexão com a internet.', true);
+                    return
+                }
+                $('choosePdf').disabled = true;
+                setPdfStatus('Lendo ' + file.name + '…');
+                pdfDraft = [];
+                reviewWrap.hidden = true;
+                try {
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+                    let bytes = new Uint8Array(await file.arrayBuffer());
+                    let pdf = await pdfjsLib.getDocument({
+                        data: bytes
+                    }).promise;
+                    if (pdf.numPages > 60)
+                        throw Error('Documento acima de 60 páginas; divida o PDF.');
+                    let chars = 0;
+                    let seen = new Set();
+                    for (let page = 1; page <= pdf.numPages; page++) {
+                        let pg = await pdf.getPage(page)
+                          , content = await pg.getTextContent();
+                        chars += content.items.reduce( (n, c) => n + (c.str?.length || 0), 0);
+                        for (let r of parsePageRows(content, page)) {
+                            let key = [r.code, r.name, r.vol, r.price, page].join('|');
+                            if (seen.has(key))
+                                continue;
+                            seen.add(key);
+                            pdfDraft.push(r)
+                        }
+                    }
+                    $('pdfSource').textContent = file.name + ' · ' + pdf.numPages + ' pág.';
+                    stageRender();
+                    if (!chars)
+                        setPdfStatus('PDF parece digitalizado: precisa de OCR. Nenhum valor foi inferido.', true);
+                    else if (!pdfDraft.length)
+                        setPdfStatus('O PDF contém texto, mas nenhuma linha compatível foi encontrada. Necessário configurar este fornecedor.', true);
+                    else
+                        setPdfStatus(pdfDraft.length + ' possíveis itens detectados. Revise linhas e marque o que deseja importar.');
+                } catch (err) {
+                    setPdfStatus('Falha na leitura do PDF: ' + err.message, true)
+                } finally {
+                    $('choosePdf').disabled = false
+                }
+            }
+            ;
+            $('confirmPdf').onclick = () => {
+                let chosen = pdfDraft.filter(r => r.selected);
+                if (!chosen.length) {
+                    setPdfStatus('Selecione pelo menos um item.', true);
+                    return
+                }
+                let invalid = chosen.filter(r => {
+                    let a = audit(r);
+                    return !a.valid || !['ok', 'reviewed'].includes(a.state)
+                }
+                );
+                if (invalid.length) {
+                    setPdfStatus(invalid.length + ' item(ns) selecionado(s) não aprovado(s). Corrija ou marque a conferência manual para as divergências.', true);
+                    return
+                }
+                let duplicates = chosen.filter(r => items.some(x => x.name === r.name && x.vol === r.vol && x.price === r.price && x.t === r.t));
+                if (duplicates.length && !confirm(duplicates.length + ' item(ns) já aparecem no pedido. Importar duplicados mesmo assim?'))
+                    return;
+                if (!confirm('Adicionar ' + chosen.length + ' itens validados ao pedido?'))
+                    return;
+                items.push(...chosen.map(r => ({
+                    name: r.name.slice(0, 150),
+                    vol: r.vol,
+                    t: r.t,
+                    price: r.price,
+                    sourceTotal: r.sourceTotal,
+                    sourceFile: $('pdfSource').textContent,
+                    area: r.dimension ? r.dimension.w * r.dimension.h / 1e6 : AREA
+                })));
+                persist();
+                render();
+                resetPdf();
+                setPdfStatus('Itens adicionados. Confira a conversão final e as condições do pedido.');
             }
             ;
             render();
