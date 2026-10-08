@@ -2,299 +2,499 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Madville | Calculadora de Chapas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#205f2b">
+<title>Madville | Gestão de Chapas</title>
 
-  <style>
-    :root {
-      --verde: #20652b;
-      --verde-escuro: #14451e;
-      --verde-claro: #eaf5ec;
-      --fundo: #f5f8f5;
-      --texto: #1c2b20;
-      --cinza: #627366;
-      --borda: #dce8de;
-    }
+<style>
+:root {
+  --green:#205f2b;
+  --dark:#16471f;
+  --light:#eaf4ec;
+  --bg:#f5f7f5;
+  --white:#fff;
+  --text:#203028;
+  --muted:#718078;
+  --border:#dfe7e1;
+  --red:#b93636;
+  --shadow:0 4px 24px rgba(15,49,24,.055);
+}
 
-    * {
-      box-sizing: border-box;
-    }
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,select {font:inherit}
+button {cursor:pointer}
+button:disabled {opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:3px solid #85c993;
+  outline-offset:2px;
+}
 
-    body {
-      margin: 0;
-      background: var(--fundo);
-      color: var(--texto);
-      font-family: Arial, Helvetica, sans-serif;
-    }
+.topbar {
+  background:var(--green);
+  color:white;
+}
+.top-inner {
+  max-width:1260px;
+  margin:auto;
+  padding:21px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.brand-mark {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  line-height:1;
+  flex-shrink:0;
+}
+.brand-mark strong {
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:-1.3px;
+  color:#fff;
+}
+.brand-mark small {
+  font-size:13px;
+  font-weight:900;
+  font-style:italic;
+  color:#fff;
+  margin-top:5px;
+}
+.brand-mark small span {color:#82bd78}
+.brand-divider {
+  height:43px;
+  width:1px;
+  background:#ffffff40;
+}
+.brand-description {
+  font-size:13px;
+  color:#e1efe4;
+  line-height:1.7;
+}
+.brand-description b {
+  font-size:15px;
+  color:white;
+}
+.version {
+  font-size:12px;
+  padding:9px 13px;
+  border-radius:50px;
+  border:1px solid #ffffff42;
+  color:white;
+  white-space:nowrap;
+}
+.container {
+  max-width:1260px;
+  padding:32px 24px 70px;
+  margin:auto;
+}
+.page-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:25px;
+}
+.eyebrow {
+  font-size:11px;
+  color:var(--green);
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  font-weight:800;
+}
+h1 {
+  font-size:30px;
+  margin:7px 0;
+  letter-spacing:-1px;
+}
+h2 {
+  font-size:18px;
+  letter-spacing:-.4px;
+  margin:0;
+}
+.subtitle {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+.card {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:24px;
+  margin-bottom:20px;
+}
+.card-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+.card-head p {
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.section-number {
+  color:var(--green);
+  background:var(--light);
+  padding:7px 10px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:800;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.span2 {grid-column:span 2}
+.field label {
+  display:block;
+  font-size:12px;
+  color:#526357;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.field input,.field select {
+  width:100%;
+  min-height:45px;
+  padding:11px 13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:#fff;
+  color:var(--text);
+  font-size:14px;
+}
+.field input:focus,.field select:focus {
+  outline:none;
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #205f2b15;
+}
+.actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.btn {
+  border:1px solid transparent;
+  border-radius:9px;
+  padding:12px 17px;
+  font-size:13px;
+  font-weight:750;
+}
+.btn-primary {
+  background:var(--green);
+  color:white;
+}
+.btn-primary:hover {background:var(--dark)}
+.btn-soft {
+  background:var(--light);
+  color:var(--green);
+}
+.btn-outline {
+  background:white;
+  color:var(--green);
+  border-color:var(--border);
+}
+.btn-danger {
+  background:#fff1f1;
+  color:var(--red);
+}
+.btn-mini {
+  font-size:12px;
+  padding:8px 10px;
+}
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+  margin:20px 0;
+}
+.metric {
+  background:#fff;
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:13px;
+  min-width:0;
+}
+.metric.highlight {
+  color:white;
+  background:var(--green);
+  border-color:var(--green);
+}
+.metric .label {
+  font-size:12px;
+  color:var(--muted);
+}
+.metric.highlight .label {color:#dfefe1}
+.metric .value {
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-.7px;
+  margin-top:13px;
+  overflow-wrap:anywhere;
+}
+.metric .foot {
+  font-size:11px;
+  color:var(--muted);
+  margin-top:7px;
+}
+.metric.highlight .foot {color:#d5ead9}
+.preview {
+  background:#f5faf6;
+  border:1px solid #e0ede2;
+  border-radius:12px;
+  padding:18px;
+  margin-top:20px;
+}
+.preview h3 {
+  margin:0 0 14px;
+  color:var(--green);
+  font-size:13px;
+}
+.preview-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.preview .label {
+  color:var(--muted);
+  font-size:11px;
+}
+.preview strong {
+  display:block;
+  font-size:20px;
+  margin-top:7px;
+  overflow-wrap:anywhere;
+}
+.table-wrap {overflow-x:auto}
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:950px;
+}
+thead {background:#f4f8f5}
+th {
+  text-align:left;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  color:#69796e;
+}
+th,td {
+  padding:15px 12px;
+  border-bottom:1px solid var(--border);
+}
+td {
+  font-size:12px;
+  vertical-align:middle;
+}
+td.numeric {
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  font-weight:700;
+}
+.empty {
+  text-align:center;
+  color:var(--muted);
+  padding:35px;
+}
+.badge {
+  display:inline-block;
+  color:var(--green);
+  background:var(--light);
+  border-radius:6px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:750;
+  white-space:nowrap;
+}
+.table-actions {
+  display:flex;
+  gap:6px;
+}
+.parameter-list {
+  display:flex;
+  flex-wrap:wrap;
+  gap:11px;
+}
+.parameter {
+  background:#f5faf6;
+  border:1px solid var(--border);
+  padding:12px 15px;
+  border-radius:9px;
+  font-size:12px;
+}
+.note {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+.notice {
+  padding:13px;
+  margin-top:16px;
+  border:1px solid #e8dbc4;
+  background:#fffbf1;
+  border-radius:9px;
+  font-size:12px;
+  color:#755e36;
+  line-height:1.5;
+}
+.footer {
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding-top:16px;
+}
 
-    header {
-      background: var(--verde);
-      color: white;
-      padding: 24px;
-    }
-
-    .header-content {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      width: 115px;
-      height: 95px;
-      object-fit: contain;
-    }
-
-    header h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-
-    header p {
-      margin: 0;
-      color: #d8eadb;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 28px auto;
-      padding: 0 18px;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid var(--borda);
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 22px;
-      box-shadow: 0 6px 24px rgba(0,0,0,.035);
-    }
-
-    h2 {
-      margin: 0 0 23px;
-      font-size: 20px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .field {
-      min-width: 0;
-    }
-
-    .field.wide {
-      grid-column: span 2;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
-      font-weight: bold;
-      color: var(--cinza);
-    }
-
-    input, select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid var(--borda);
-      border-radius: 9px;
-      font-size: 15px;
-      background: white;
-      color: var(--texto);
-    }
-
-    input:focus, select:focus {
-      outline: 2px solid #a1d4a9;
-      border-color: var(--verde);
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-
-    button {
-      border: none;
-      padding: 12px 18px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      filter: brightness(.94);
-    }
-
-    .primary {
-      background: var(--verde);
-      color: white;
-    }
-
-    .secondary {
-      background: var(--verde-claro);
-      color: var(--verde-escuro);
-    }
-
-    .danger {
-      background: #fff0f0;
-      color: #b52b2b;
-    }
-
-    .results {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 25px;
-    }
-
-    .result {
-      padding: 20px;
-      border-radius: 12px;
-      background: var(--verde-claro);
-      min-width: 0;
-    }
-
-    .result span {
-      font-size: 13px;
-      color: var(--cinza);
-    }
-
-    .result strong {
-      display: block;
-      font-size: 27px;
-      margin-top: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    .result.highlight {
-      background: var(--verde);
-      color: white;
-    }
-
-    .result.highlight span {
-      color: #d8eadb;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 850px;
-      border-collapse: collapse;
-      margin-top: 18px;
-    }
-
-    th {
-      background: var(--verde-claro);
-      color: var(--verde-escuro);
-      text-align: left;
-      font-size: 12px;
-    }
-
-    th, td {
-      padding: 13px;
-      border-bottom: 1px solid var(--borda);
-    }
-
-    td {
-      font-size: 13px;
-    }
-
-    .summary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-      font-weight: bold;
-    }
-
-    .summary strong {
-      color: var(--verde);
-      font-size: 23px;
-    }
-
-    .note {
-      color: var(--cinza);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: var(--cinza);
-      font-size: 12px;
-    }
-
-    @media(max-width: 700px) {
-      .grid, .results {
-        grid-template-columns: 1fr;
-      }
-
-      .field.wide {
-        grid-column: span 1;
-      }
-
-      header h1 {
-        font-size: 23px;
-      }
-
-      .card {
-        padding: 18px;
-      }
-    }
-  </style>
+@media(max-width:1000px) {
+  .grid,.metrics {grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px) {
+  .container {padding:20px 12px 40px}
+  .top-inner {padding:18px 14px}
+  .brand-mark strong {font-size:21px}
+  .brand-description {font-size:11px}
+  .brand-description b {font-size:12px}
+  .version {display:none}
+  .card {padding:18px}
+  .grid,.metrics,.preview-grid {
+    grid-template-columns:1fr;
+  }
+  .span2 {grid-column:span 1}
+  .page-head {display:block}
+  h1 {font-size:26px}
+}
+@media print {
+  body {background:white}
+  .topbar {
+    background:white!important;
+    color:black!important;
+    border-bottom:2px solid #205f2b;
+  }
+  .brand-mark strong,.brand-mark small,
+  .brand-description,.brand-description b {
+    color:#205f2b!important;
+  }
+  .version,.no-print,.preview {display:none!important}
+  .container {max-width:none;padding:12px}
+  .card,.metric {
+    box-shadow:none;
+    break-inside:avoid;
+  }
+  .metrics {grid-template-columns:repeat(4,1fr)}
+  .metric.highlight {
+    background:white!important;
+    color:black!important;
+    border:1px solid #205f2b;
+  }
+  .metric.highlight .label,
+  .metric.highlight .foot {color:#555!important}
+  .table-wrap {overflow:visible}
+  table {min-width:0;font-size:9px}
+  th,td {padding:6px;font-size:9px}
+  .table-actions {display:none}
+  .footer {font-size:10px}
+  @page {size:A4 landscape;margin:10mm}
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-content">
-    <img src="logo.png" alt="Madville" class="logo">
-    <div>
-      <h1>Calculadora de Chapas</h1>
-      <p>Madville | Departamento de Compras</p>
+<header class="topbar">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-label="Madville GMAD">
+        <strong>MADVILLE</strong>
+        <small>GM<span>A</span>D</small>
+      </div>
+      <div class="brand-divider"></div>
+      <div class="brand-description">
+        <b>Central de Compras</b><br>
+        Gestão e Conversão de Chapas
+      </div>
     </div>
+    <div class="version">Sistema Interno · V2.0</div>
   </div>
 </header>
 
-<main>
+<main class="container">
+
+  <section class="page-head">
+    <div>
+      <div class="eyebrow">Ferramentas operacionais</div>
+      <h1>Calculadora de Chapas</h1>
+      <div class="subtitle">
+        Conversão de unidades, precificação e controle de pedidos.
+      </div>
+    </div>
+  </section>
 
   <section class="card">
-    <h2>Conversão de Chapas</h2>
+    <div class="card-head">
+      <h2>Informações do pedido</h2>
+      <span class="section-number">01</span>
+    </div>
 
-    <form id="formulario">
+    <div class="grid">
+      <div class="field span2">
+        <label for="fornecedor">Fornecedor</label>
+        <input id="fornecedor" placeholder="Nome do fornecedor">
+      </div>
+      <div class="field">
+        <label for="pedido">Número do pedido</label>
+        <input id="pedido" placeholder="Ex.: OC-10258">
+      </div>
+      <div class="field">
+        <label for="data">Data</label>
+        <input type="date" id="data">
+      </div>
+    </div>
+  </section>
+
+  <section class="card no-print">
+    <div class="card-head">
+      <div>
+        <h2>Adicionar produto</h2>
+        <p>Insira as informações para converter automaticamente.</p>
+      </div>
+      <span class="section-number">02</span>
+    </div>
+
+    <form id="form">
       <div class="grid">
 
-        <div class="field wide">
-          <label for="produto">Produto</label>
+        <div class="field span2">
+          <label for="produto">Descrição / código</label>
           <input id="produto"
-                 type="text"
-                 placeholder="Ex.: MDF Branco 18 mm"
-                 required>
+            placeholder="Ex.: MDF Branco TX 18 mm"
+            required maxlength="160">
         </div>
 
         <div class="field">
-          <label for="quantidade">Quantidade (m³)</label>
-          <input id="quantidade"
-                 type="text"
-                 inputmode="decimal"
-                 placeholder="Ex.: 1,5"
-                 required>
+          <label for="volume">Quantidade (m³)</label>
+          <input id="volume" inputmode="decimal"
+            placeholder="Ex.: 1,5" required>
         </div>
 
         <div class="field">
@@ -307,63 +507,94 @@
           </select>
         </div>
 
-        <div class="field">
-          <label for="preco">Preço por m³ (R$)</label>
-          <input id="preco"
-                 type="text"
-                 inputmode="decimal"
-                 placeholder="Ex.: 1500,00"
-                 required>
+        <div class="field span2">
+          <label for="preco">Preço de compra (R$/m³)</label>
+          <input id="preco" inputmode="decimal"
+            placeholder="Ex.: 1500,00" required>
         </div>
 
       </div>
 
-      <div class="actions">
-        <button type="submit" class="primary">
-          + Adicionar item
-        </button>
+      <div class="preview" aria-live="polite">
+        <h3>Prévia da conversão</h3>
+        <div class="preview-grid">
+          <div>
+            <span class="label">Chapas equivalentes</span>
+            <strong id="prevChapas">—</strong>
+          </div>
+          <div>
+            <span class="label">Preço por chapa</span>
+            <strong id="prevPreco">—</strong>
+          </div>
+          <div>
+            <span class="label">Valor total teórico</span>
+            <strong id="prevTotal">—</strong>
+          </div>
+        </div>
+      </div>
 
-        <button type="button" class="secondary"
-                onclick="limparCampos()">
+      <div class="actions" style="margin-top:20px">
+        <button type="submit" class="btn btn-primary"
+          id="btnSalvar">
+          + Adicionar ao pedido
+        </button>
+        <button type="button" class="btn btn-soft"
+          id="btnCancelar" hidden>
+          Cancelar edição
+        </button>
+        <button type="reset" class="btn btn-outline">
           Limpar campos
         </button>
       </div>
     </form>
+  </section>
 
-    <div class="results" aria-live="polite">
-      <div class="result">
-        <span>Quantidade de chapas</span>
-        <strong id="resultadoQuantidade">—</strong>
-      </div>
+  <section class="metrics">
+    <div class="metric">
+      <div class="label">Produtos no pedido</div>
+      <div class="value" id="totalItens">0</div>
+      <div class="foot">Linhas cadastradas</div>
+    </div>
 
-      <div class="result">
-        <span>Preço por chapa</span>
-        <strong id="resultadoPreco">—</strong>
-      </div>
+    <div class="metric">
+      <div class="label">Volume total</div>
+      <div class="value" id="totalVolume">0</div>
+      <div class="foot">Metros cúbicos (m³)</div>
+    </div>
 
-      <div class="result highlight">
-        <span>Valor total do item</span>
-        <strong id="resultadoTotal">—</strong>
-      </div>
+    <div class="metric">
+      <div class="label">Chapas equivalentes</div>
+      <div class="value" id="totalChapas">0</div>
+      <div class="foot">Quantidade teórica</div>
+    </div>
+
+    <div class="metric highlight">
+      <div class="label">Valor total convertido</div>
+      <div class="value" id="valorTotal">R$ 0,00</div>
+      <div class="foot">Com acréscimo de 3,25%</div>
     </div>
   </section>
 
   <section class="card">
-
-    <h2>Itens do Pedido</h2>
-
-    <div class="actions">
-      <button class="secondary" onclick="exportarCSV()">
-        Exportar Excel (CSV)
-      </button>
-
-      <button class="secondary" onclick="window.print()">
-        Imprimir
-      </button>
-
-      <button class="danger" onclick="limparPedido()">
-        Limpar pedido
-      </button>
+    <div class="card-head">
+      <div>
+        <h2>Itens do pedido</h2>
+        <p>Conferência dos produtos e valores convertidos.</p>
+      </div>
+      <div class="actions no-print">
+        <button type="button" class="btn btn-soft"
+          id="btnCSV">
+          Exportar Excel
+        </button>
+        <button type="button" class="btn btn-outline"
+          onclick="window.print()">
+          Imprimir / PDF
+        </button>
+        <button type="button" class="btn btn-danger"
+          id="btnLimpar">
+          Limpar pedido
+        </button>
+      </div>
     </div>
 
     <div class="table-wrap">
@@ -371,341 +602,513 @@
         <thead>
           <tr>
             <th>Produto</th>
-            <th>Espessura</th>
+            <th>Esp.</th>
             <th>Volume m³</th>
             <th>Chapas</th>
-            <th>Chapas inteiras</th>
-            <th>Preço/chapa</th>
+            <th>Inteiras</th>
+            <th>R$/chapa</th>
             <th>Total</th>
-            <th>Ação</th>
+            <th class="no-print">Ações</th>
           </tr>
         </thead>
-        <tbody id="tabelaItens"></tbody>
+        <tbody id="tabela"></tbody>
       </table>
     </div>
 
-    <div class="summary">
-      <div>
-        Itens: <span id="totalItens">0</span>
-      </div>
-      <div>
-        Chapas equivalentes:
-        <span id="totalChapas">0</span>
-      </div>
-      <div>
-        Total do pedido:
-        <strong id="totalPedido">R$ 0,00</strong>
-      </div>
+    <div class="notice">
+      A quantidade de chapas inteiras é arredondada
+      para cima apenas como referência operacional.
+      Os valores financeiros são calculados utilizando
+      a quantidade teórica sem arredondamento.
     </div>
-
-    <p class="note">
-      Quantidades fracionárias representam chapas equivalentes.
-      O arredondamento para chapas inteiras é apenas indicativo.
-    </p>
-
   </section>
 
   <section class="card">
-    <h2>Parâmetros do Cálculo</h2>
+    <div class="card-head">
+      <h2>Parâmetros de conversão</h2>
+    </div>
 
-    <p><b>Área nominal:</b> 5,0875 m²</p>
-    <p><b>Acréscimo no preço:</b> 3,25%</p>
-    <p><b>Espessuras:</b> 06, 15, 18 e 25 mm</p>
+    <div class="parameter-list">
+      <span class="parameter">
+        Área padrão: <b>5,0875 m²</b>
+      </span>
+      <span class="parameter">
+        Acréscimo: <b>3,25%</b>
+      </span>
+      <span class="parameter">
+        Área ajustada: <b>5,25284375 m²</b>
+      </span>
+      <span class="parameter">
+        Espessuras: <b>06 / 15 / 18 / 25 mm</b>
+      </span>
+    </div>
 
     <p class="note">
-      Quantidade = Volume / (5,0875 × Espessura)
+      Quantidade = Volume ÷ (5,0875 × Espessura em metros).
     </p>
-
     <p class="note">
-      Preço/chapa = Preço/m³ × Espessura × 5,0875 × 1,0325
+      Preço/chapa = Preço/m³ × Espessura ×
+      5,0875 × 1,0325.
+    </p>
+    <p class="note">
+      O acréscimo de 3,25% é aplicado ao preço,
+      não à quantidade.
     </p>
   </section>
 
+  <div class="footer">
+    MADVILLE | GMAD — Departamento de Compras<br>
+    Ferramenta de apoio à conferência e conversão.
+  </div>
+
 </main>
 
-<footer>
-  MADVILLE | GMAD — Sistema de Apoio ao Departamento de Compras
-</footer>
-
 <script>
-  const AREA = 5.0875;
-  const ACRESCIMO = 1.0325;
-  const CHAVE = "madville_calculadora_chapas_v1";
+"use strict";
 
-  const $ = id => document.getElementById(id);
+const AREA = 5.0875;
+const ACRESCIMO = 1.0325;
+const STORAGE_KEY = "madville_chapas_v2";
 
-  let itens = [];
+const $ = id => document.getElementById(id);
 
+const espessurasPermitidas = [
+  0.006, 0.015, 0.018, 0.025
+];
+
+let itens = [];
+let indiceEdicao = null;
+
+// Formatação brasileira
+const br = (n, casas = 4) =>
+  new Intl.NumberFormat("pt-BR", {
+    minimumFractionDigits: casas,
+    maximumFractionDigits: casas
+  }).format(n);
+
+const moeda = n =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  }).format(n);
+
+// Aceita 1500,50 e 1500.50.
+// Também aceita 1.500,50 e 1,500.50.
+function parseDecimal(valor) {
+  let s = String(valor).trim()
+    .replace(/\s/g, "")
+    .replace(/^R\$/, "");
+
+  if (!s) return NaN;
+
+  const virgula = s.lastIndexOf(",");
+  const ponto = s.lastIndexOf(".");
+
+  if (virgula !== -1 && ponto !== -1) {
+    if (virgula > ponto) {
+      s = s.replace(/\./g, "").replace(",", ".");
+    } else {
+      s = s.replace(/,/g, "");
+    }
+  } else if (virgula !== -1) {
+    s = s.replace(",", ".");
+  }
+
+  if (!/^\d+(\.\d+)?$/.test(s)) return NaN;
+
+  return Number(s);
+}
+
+// Regra de negócio centralizada
+function calcular(volume, espessura, precoM3) {
+  const chapas = volume / (AREA * espessura);
+
+  const precoChapa =
+    precoM3 * espessura * AREA * ACRESCIMO;
+
+  const total = chapas * precoChapa;
+
+  return {
+    chapas,
+    inteiras: Math.ceil(chapas - 1e-9),
+    precoChapa,
+    total
+  };
+}
+
+function validarItem(item) {
+  return (
+    typeof item.produto === "string" &&
+    item.produto.trim().length > 0 &&
+    item.produto.length <= 160 &&
+    Number.isFinite(item.volume) &&
+    item.volume > 0 &&
+    Number.isFinite(item.preco) &&
+    item.preco >= 0 &&
+    espessurasPermitidas.includes(item.espessura)
+  );
+}
+
+function salvarDados() {
   try {
-    const salvos = JSON.parse(localStorage.getItem(CHAVE) || "[]");
-    itens = Array.isArray(salvos) ? salvos : [];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      itens,
+      fornecedor: $("fornecedor").value,
+      pedido: $("pedido").value,
+      data: $("data").value
+    }));
+  } catch (erro) {
+    console.error("Erro ao salvar:", erro);
+  }
+}
+
+function carregarDados() {
+  try {
+    const dados = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "{}"
+    );
+
+    itens = Array.isArray(dados.itens)
+      ? dados.itens.filter(validarItem)
+      : [];
+
+    $("fornecedor").value = dados.fornecedor || "";
+    $("pedido").value = dados.pedido || "";
+    $("data").value = dados.data || "";
   } catch {
     itens = [];
   }
 
-  function numero(valor) {
-    let texto = String(valor).trim().replace(/\s/g, "");
+  if (!$("data").value) {
+    const agora = new Date();
+    const local = new Date(
+      agora.getTime() -
+      agora.getTimezoneOffset() * 60000
+    );
+    $("data").value = local.toISOString().slice(0, 10);
+  }
+}
 
-    if (texto.includes(",") && texto.includes(".")) {
-      texto = texto.replace(/\./g, "").replace(",", ".");
-    } else if (texto.includes(",")) {
-      texto = texto.replace(",", ".");
-    }
+function lerFormulario() {
+  return {
+    produto: $("produto").value.trim(),
+    volume: parseDecimal($("volume").value),
+    espessura: Number($("espessura").value),
+    preco: parseDecimal($("preco").value)
+  };
+}
 
-    if (!texto) return NaN;
+function atualizarPreview() {
+  const item = lerFormulario();
 
-    return Number(texto);
+  $("prevChapas").textContent = "—";
+  $("prevPreco").textContent = "—";
+  $("prevTotal").textContent = "—";
+
+  if (
+    !Number.isFinite(item.volume) ||
+    item.volume <= 0 ||
+    !Number.isFinite(item.preco) ||
+    item.preco < 0
+  ) return;
+
+  const r = calcular(
+    item.volume,
+    item.espessura,
+    item.preco
+  );
+
+  $("prevChapas").textContent = br(r.chapas);
+  $("prevPreco").textContent = moeda(r.precoChapa);
+  $("prevTotal").textContent = moeda(r.total);
+}
+
+function encerrarEdicao() {
+  indiceEdicao = null;
+  $("btnSalvar").textContent = "+ Adicionar ao pedido";
+  $("btnCancelar").hidden = true;
+}
+
+function limparFormulario() {
+  $("form").reset();
+  encerrarEdicao();
+  atualizarPreview();
+}
+
+function adicionarOuEditar(evento) {
+  evento.preventDefault();
+
+  const item = lerFormulario();
+
+  if (!validarItem(item)) {
+    alert(
+      "Confira a descrição, a espessura, " +
+      "o volume positivo e o preço informado."
+    );
+    return;
   }
 
-  function formato(valor, casas = 4) {
-    return new Intl.NumberFormat("pt-BR", {
-      minimumFractionDigits: casas,
-      maximumFractionDigits: casas
-    }).format(valor);
+  const r = calcular(
+    item.volume,
+    item.espessura,
+    item.preco
+  );
+
+  if (!Object.values(r).every(Number.isFinite)) {
+    alert("O cálculo excedeu os limites numéricos.");
+    return;
   }
 
-  function dinheiro(valor) {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    }).format(valor);
+  if (indiceEdicao !== null) {
+    itens[indiceEdicao] = item;
+  } else {
+    itens.push(item);
   }
 
-  function calcular(volume, espessura, preco) {
-    const chapas = volume / (AREA * espessura);
+  salvarDados();
+  renderizar();
+  limparFormulario();
+}
 
-    const precoChapa =
-      preco * espessura * AREA * ACRESCIMO;
+function editarItem(indice) {
+  const item = itens[indice];
+  if (!item) return;
 
-    const total = chapas * precoChapa;
+  indiceEdicao = indice;
 
-    return {
-      chapas,
-      chapasInteiras: Math.ceil(chapas - 1e-10),
-      precoChapa,
-      total
-    };
+  $("produto").value = item.produto;
+  $("volume").value = String(item.volume).replace(".", ",");
+  $("espessura").value = String(item.espessura);
+  $("preco").value = String(item.preco).replace(".", ",");
+
+  $("btnSalvar").textContent = "Salvar alterações";
+  $("btnCancelar").hidden = false;
+
+  atualizarPreview();
+
+  $("form").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function excluirItem(indice) {
+  if (!confirm("Excluir este item do pedido?")) return;
+
+  itens.splice(indice, 1);
+  encerrarEdicao();
+  salvarDados();
+  renderizar();
+}
+
+function adicionarCelula(linha, texto, classe = "") {
+  const td = linha.insertCell();
+  td.textContent = texto;
+  if (classe) td.className = classe;
+  return td;
+}
+
+// Renderização sem inserir dados de usuário como HTML
+function renderizar() {
+  const tbody = $("tabela");
+  tbody.replaceChildren();
+
+  let volumeTotal = 0;
+  let chapasTotal = 0;
+  let totalGeral = 0;
+
+  if (itens.length === 0) {
+    const tr = tbody.insertRow();
+    const td = tr.insertCell();
+    td.colSpan = 8;
+    td.className = "empty";
+    td.textContent = "Nenhum produto adicionado.";
   }
 
-  function lerCampos() {
-    const volume = numero($("quantidade").value);
-    const espessura = Number($("espessura").value);
-    const preco = numero($("preco").value);
-
-    const valido =
-      Number.isFinite(volume) &&
-      volume > 0 &&
-      Number.isFinite(preco) &&
-      preco >= 0;
-
-    return { volume, espessura, preco, valido };
-  }
-
-  function atualizarPreview() {
-    const dados = lerCampos();
-
-    $("resultadoQuantidade").textContent = "—";
-    $("resultadoPreco").textContent = "—";
-    $("resultadoTotal").textContent = "—";
-
-    if (!dados.valido) return;
-
-    const resultado = calcular(
-      dados.volume,
-      dados.espessura,
-      dados.preco
+  itens.forEach((item, indice) => {
+    const r = calcular(
+      item.volume,
+      item.espessura,
+      item.preco
     );
 
-    $("resultadoQuantidade").textContent =
-      formato(resultado.chapas);
+    volumeTotal += item.volume;
+    chapasTotal += r.chapas;
+    totalGeral += r.total;
 
-    $("resultadoPreco").textContent =
-      dinheiro(resultado.precoChapa);
+    const tr = tbody.insertRow();
 
-    $("resultadoTotal").textContent =
-      dinheiro(resultado.total);
-  }
+    adicionarCelula(tr, item.produto);
 
-  function salvar() {
-    try {
-      localStorage.setItem(CHAVE, JSON.stringify(itens));
-    } catch {
-      alert("Não foi possível salvar os dados neste navegador.");
-    }
-  }
+    const esp = adicionarCelula(
+      tr,
+      br(item.espessura * 1000, 0) + " mm"
+    );
+    esp.className = "numeric";
 
-  function adicionarItem(evento) {
-    evento.preventDefault();
+    adicionarCelula(
+      tr, br(item.volume), "numeric"
+    );
 
-    const dados = lerCampos();
-    const produto = $("produto").value.trim();
+    adicionarCelula(
+      tr, br(r.chapas), "numeric"
+    );
 
-    if (!produto || !dados.valido) {
-      alert("Preencha corretamente todos os campos.");
-      return;
-    }
+    adicionarCelula(
+      tr, br(r.inteiras, 0), "numeric"
+    );
 
-    itens.push({
-      produto,
-      volume: dados.volume,
-      espessura: dados.espessura,
-      preco: dados.preco
-    });
+    adicionarCelula(
+      tr, moeda(r.precoChapa), "numeric"
+    );
 
-    salvar();
-    renderizarTabela();
-    limparCampos();
-  }
+    adicionarCelula(
+      tr, moeda(r.total), "numeric"
+    );
 
-  function limparCampos() {
-    $("formulario").reset();
-    $("produto").value = "";
-    $("quantidade").value = "";
-    $("preco").value = "";
-    atualizarPreview();
-  }
+    const td = tr.insertCell();
+    td.className = "no-print";
 
-  function excluirItem(indice) {
-    itens.splice(indice, 1);
-    salvar();
-    renderizarTabela();
-  }
+    const div = document.createElement("div");
+    div.className = "table-actions";
 
-  function renderizarTabela() {
-    const tabela = $("tabelaItens");
-    tabela.replaceChildren();
+    const editar = document.createElement("button");
+    editar.className = "btn btn-soft btn-mini";
+    editar.textContent = "Editar";
+    editar.onclick = () => editarItem(indice);
 
-    let somaChapas = 0;
-    let somaTotal = 0;
+    const excluir = document.createElement("button");
+    excluir.className = "btn btn-danger btn-mini";
+    excluir.textContent = "Excluir";
+    excluir.onclick = () => excluirItem(indice);
 
-    if (!itens.length) {
-      const linha = tabela.insertRow();
-      const celula = linha.insertCell();
-
-      celula.colSpan = 8;
-      celula.textContent = "Nenhum item adicionado.";
-      celula.style.textAlign = "center";
-    }
-
-    itens.forEach((item, indice) => {
-      const r = calcular(
-        item.volume,
-        item.espessura,
-        item.preco
-      );
-
-      somaChapas += r.chapas;
-      somaTotal += r.total;
-
-      const linha = tabela.insertRow();
-
-      const dados = [
-        item.produto,
-        formato(item.espessura * 1000, 0) + " mm",
-        formato(item.volume),
-        formato(r.chapas),
-        formato(r.chapasInteiras, 0),
-        dinheiro(r.precoChapa),
-        dinheiro(r.total)
-      ];
-
-      dados.forEach(valor => {
-        const celula = linha.insertCell();
-        celula.textContent = valor;
-      });
-
-      const celulaAcao = linha.insertCell();
-      const botao = document.createElement("button");
-
-      botao.textContent = "Excluir";
-      botao.className = "danger";
-      botao.onclick = () => excluirItem(indice);
-
-      celulaAcao.appendChild(botao);
-    });
-
-    $("totalItens").textContent = itens.length;
-    $("totalChapas").textContent = formato(somaChapas);
-    $("totalPedido").textContent = dinheiro(somaTotal);
-  }
-
-  function limparPedido() {
-    if (!itens.length) return;
-
-    if (confirm("Deseja excluir todos os itens do pedido?")) {
-      itens = [];
-      salvar();
-      renderizarTabela();
-    }
-  }
-
-  function exportarCSV() {
-    if (!itens.length) {
-      alert("Adicione itens antes de exportar.");
-      return;
-    }
-
-    const linhas = [[
-      "Produto",
-      "Espessura mm",
-      "Volume m3",
-      "Chapas equivalentes",
-      "Chapas inteiras",
-      "Preco por chapa",
-      "Valor total"
-    ]];
-
-    itens.forEach(item => {
-      const r = calcular(
-        item.volume,
-        item.espessura,
-        item.preco
-      );
-
-      linhas.push([
-        item.produto,
-        item.espessura * 1000,
-        item.volume,
-        r.chapas,
-        r.chapasInteiras,
-        r.precoChapa,
-        r.total
-      ]);
-    });
-
-    const csv = "\uFEFF" + linhas
-      .map(linha =>
-        linha.map(valor =>
-          '"' + String(valor).replace(/"/g, '""') + '"'
-        ).join(";")
-      )
-      .join("\r\n");
-
-    const arquivo = new Blob([csv], {
-      type: "text/csv;charset=utf-8;"
-    });
-
-    const url = URL.createObjectURL(arquivo);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "pedido_chapas_madville.csv";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-
-  $("formulario").addEventListener("submit", adicionarItem);
-
-  ["quantidade", "espessura", "preco"].forEach(id => {
-    $(id).addEventListener("input", atualizarPreview);
+    div.append(editar, excluir);
+    td.appendChild(div);
   });
 
-  renderizarTabela();
+  $("totalItens").textContent = br(itens.length, 0);
+  $("totalVolume").textContent = br(volumeTotal);
+  $("totalChapas").textContent = br(chapasTotal);
+  $("valorTotal").textContent = moeda(totalGeral);
+}
+
+function limparPedido() {
+  if (!itens.length) return;
+
+  if (!confirm("Deseja apagar todos os itens?")) return;
+
+  itens = [];
+  encerrarEdicao();
+  salvarDados();
+  renderizar();
+  limparFormulario();
+}
+
+function csvSeguro(valor) {
+  let texto = String(valor);
+
+  // Impede execução de fórmulas ao abrir no Excel
+  if (/^[\s]*[=+\-@\t\r]/.test(texto)) {
+    texto = "'" + texto;
+  }
+
+  return '"' + texto.replace(/"/g, '""') + '"';
+}
+
+function exportarCSV() {
+  if (!itens.length) {
+    alert("Adicione produtos antes de exportar.");
+    return;
+  }
+
+  const linhas = [[
+    "Fornecedor", "Pedido", "Data",
+    "Produto", "Espessura (mm)",
+    "Volume (m3)", "Chapas equivalentes",
+    "Chapas inteiras", "Preco por chapa (R$)",
+    "Total convertido (R$)"
+  ]];
+
+  itens.forEach(item => {
+    const r = calcular(
+      item.volume,
+      item.espessura,
+      item.preco
+    );
+
+    linhas.push([
+      $("fornecedor").value,
+      $("pedido").value,
+      $("data").value,
+      item.produto,
+      item.espessura * 1000,
+      item.volume,
+      r.chapas,
+      r.inteiras,
+      r.precoChapa,
+      r.total
+    ]);
+  });
+
+  const csv = "\uFEFF" + linhas
+    .map(linha => linha.map(csvSeguro).join(";"))
+    .join("\r\n");
+
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "madville_pedido_chapas.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Inicialização
+document.addEventListener("DOMContentLoaded", () => {
+  carregarDados();
+  renderizar();
   atualizarPreview();
+
+  $("form").addEventListener(
+    "submit", adicionarOuEditar
+  );
+
+  $("form").addEventListener("reset", () => {
+    setTimeout(encerrarEdicao, 0);
+    setTimeout(atualizarPreview, 0);
+  });
+
+  $("btnCancelar").addEventListener(
+    "click", limparFormulario
+  );
+
+  ["produto", "volume", "espessura", "preco"]
+    .forEach(id => {
+      $(id).addEventListener(
+        "input", atualizarPreview
+      );
+    });
+
+  ["fornecedor", "pedido", "data"].forEach(id => {
+    $(id).addEventListener("input", salvarDados);
+    $(id).addEventListener("change", salvarDados);
+  });
+
+  $("btnCSV").addEventListener(
+    "click", exportarCSV
+  );
+
+  $("btnLimpar").addEventListener(
+    "click", limparPedido
+  );
+});
 </script>
 
 </body>
