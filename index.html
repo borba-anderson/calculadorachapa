@@ -2732,6 +2732,202 @@
                 }
             }
         </style>
+        <style>
+            /* Print override v3 - full width professional fit */
+            @media print {
+                @page {
+                    size: A4 landscape;
+                    margin: 8mm 10mm
+                }
+
+                html,body {
+                    width: 100%!important;
+                    height: auto!important;
+                    background: #fff!important
+                }
+
+                body {
+                    font-size: 10px!important;
+                    line-height: 1.25!important;
+                    color: #1d241f!important;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact
+                }
+
+                .shell,.order-panel,.report-head,.report-bar,.order-head,.order-panel .table-wrap {
+                    width: 100%!important;
+                    max-width: none!important;
+                    margin: 0!important;
+                    padding: 0!important;
+                    box-sizing: border-box!important
+                }
+
+                .order-panel {
+                    padding: 0!important
+                }
+
+                .report-head {
+                    margin: 0 0 3mm!important
+                }
+
+                .report-bar {
+                    display: grid!important;
+                    grid-template-columns: minmax(0,1fr) 78mm!important;
+                    column-gap: 5mm!important;
+                    align-items: start!important
+                }
+
+                .report-brand {
+                    gap: 5mm!important;
+                    align-items: flex-start!important;
+                    min-width: 0!important
+                }
+
+                .report-logo {
+                    width: 44mm!important;
+                    max-width: 44mm!important;
+                    height: auto!important
+                }
+
+                .report-brand-copy {
+                    min-width: 0!important;
+                    width: 100%!important;
+                    padding-top: 0!important
+                }
+
+                .report-kicker {
+                    font-size: 18px!important;
+                    line-height: 1.05!important;
+                    margin: 0 0 1.5mm!important
+                }
+
+                .report-sub {
+                    font-size: 10px!important;
+                    margin: 0 0 2mm!important
+                }
+
+                .report-meta-line {
+                    font-size: 9px!important;
+                    line-height: 1.35!important
+                }
+
+                .report-stats {
+                    display: grid!important;
+                    grid-template-columns: repeat(3,minmax(0,1fr))!important;
+                    gap: 2mm!important;
+                    max-width: none!important;
+                    flex: none!important
+                }
+
+                .report-stat {
+                    min-height: auto!important;
+                    padding: 2.2mm 2.4mm!important;
+                    border-radius: 6px!important
+                }
+
+                .report-stat span {
+                    font-size: 8px!important;
+                    margin-bottom: .6mm!important
+                }
+
+                .report-stat strong {
+                    font-size: 12px!important;
+                    line-height: 1.1!important
+                }
+
+                .report-stat-total strong {
+                    font-size: 13px!important
+                }
+
+                .report-note-print {
+                    margin-top: 2.5mm!important;
+                    padding-top: 1.8mm!important;
+                    font-size: 8.5px!important;
+                    line-height: 1.3!important
+                }
+
+                .order-head {
+                    padding: 0 0 2.2mm!important;
+                    margin: 0 0 2.2mm!important
+                }
+
+                .order-head .section-title {
+                    font-size: 12px!important
+                }
+
+                .order-panel table {
+                    width: 100%!important;
+                    min-width: 0!important;
+                    table-layout: fixed!important;
+                    border-collapse: collapse!important
+                }
+
+                .order-panel col.col-product {
+                    width: 46%!important
+                }
+
+                .order-panel col.col-esp {
+                    width: 8%!important
+                }
+
+                .order-panel col.col-vol {
+                    width: 10%!important
+                }
+
+                .order-panel col.col-chapas {
+                    width: 8%!important
+                }
+
+                .order-panel col.col-price {
+                    width: 12%!important
+                }
+
+                .order-panel col.col-total {
+                    width: 16%!important
+                }
+
+                .order-panel th,.order-panel td {
+                    padding: 5px 4px!important
+                }
+
+                .order-panel th {
+                    font-size: 8px!important;
+                    line-height: 1.15!important
+                }
+
+                .order-panel td {
+                    font-size: 8.5px!important;
+                    line-height: 1.2!important
+                }
+
+                .order-panel td:first-child {
+                    min-width: 0!important;
+                    max-width: none!important;
+                    width: auto!important
+                }
+
+                .order-panel td:nth-child(1) {
+                    font-size: 8px!important
+                }
+
+                .order-panel td:nth-child(2),.order-panel td:nth-child(3),.order-panel td:nth-child(4),.order-panel td:nth-child(5),.order-panel td:nth-child(6), .order-panel th:nth-child(2),.order-panel th:nth-child(3),.order-panel th:nth-child(4),.order-panel th:nth-child(5),.order-panel th:nth-child(6) {
+                    text-align: right!important
+                }
+
+                .order-panel tr {
+                    page-break-inside: avoid!important;
+                    break-inside: avoid!important
+                }
+
+                .order-panel thead {
+                    display: table-header-group!important
+                }
+
+                .empty {
+                    padding: 8mm 0!important
+                }
+            }
+        </style>
     </head>
     <body>
         <header class="topbar">
